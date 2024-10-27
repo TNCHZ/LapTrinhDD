@@ -1,10 +1,7 @@
 package com.example.jpyou;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
-import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -15,8 +12,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity extends AppCompatActivity {
-
+public class giaodien_nguoidung extends AppCompatActivity {
     private EditText pass;
     private CheckBox check_show;
 
@@ -30,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+// CheckBox -> Show Password
         pass = findViewById(R.id.editTextTextPassword);//lấy id EditText Password
         check_show = findViewById(R.id.checkBox);//lấy id CheckBox Show
         //Hàm Show/Hint Password
@@ -40,14 +37,10 @@ public class MainActivity extends AppCompatActivity {
                     pass.setTransformationMethod(null);
                 }else{
                     pass.setTransformationMethod(new PasswordTransformationMethod());
+                    pass.setSelection(pass.getText().length());
                 }
-                pass.setSelection(pass.length());
             }
         });
 
     }
-
-
-
-
 }

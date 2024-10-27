@@ -13,7 +13,12 @@
         android:theme="@style/Theme.Jpyou"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".giaodien_nguoidung"
+            android:exported="false" />
+        <activity android:name=".menu_admin"
+            android:exported="false"/>
+        <activity
+            android:name=".giaodien_admin"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
