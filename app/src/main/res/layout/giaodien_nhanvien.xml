@@ -10,7 +10,7 @@
     tools:context=".giaodien_nhanvien">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageLogo"
         android:layout_width="155dp"
         android:layout_height="150dp"
         android:layout_gravity="center"
@@ -28,17 +28,16 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/editTextUseName"
+        android:id="@+id/txtTaiKhoan_NhanVien"
         android:background="@drawable/custome_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:ems="10"
-        android:hint="Tên đăng nhập "
-        android:inputType="phone" />
+        android:hint="Tên đăng nhập " />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/txtMatKhau_NhanVien"
         android:background="@drawable/custome_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -55,28 +54,42 @@
         android:orientation="horizontal">
 
         <CheckBox
-            android:id="@+id/checkBox"
+            android:id="@+id/showPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Hiển thị mật khẩu" />
 
-        <TextView
-            android:id="@+id/textView2"
+        <Button
+            android:id="@+id/btnQuenMatKhau_NhanVien"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Quên mật khẩu?"
-            android:textAlignment="viewEnd" />
+            android:text="Quên mật khẩu ?"
+            android:textAlignment="viewEnd"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            app:backgroundTint="@null" />
+
     </LinearLayout>
 
     <Button
-        android:id="@+id/ButtonsLogin"
+        android:id="@+id/btnLogin_NhanVien"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@drawable/custom_button"
         android:text="Đăng nhập"
         android:layout_gravity="center"
+        app:backgroundTint="@null" />
+
+    <Button
+        android:id="@+id/btnDangKy_NhanVien"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Tạo tài khoản mới ?"
+        android:background="@color/white"
+        android:textColor="@color/black"
         app:backgroundTint="@null" />
 
 </LinearLayout>

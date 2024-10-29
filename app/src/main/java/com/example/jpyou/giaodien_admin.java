@@ -33,10 +33,10 @@ public class giaodien_admin extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        taiKhoan = findViewById(R.id.taiKhoanAdmin);
-        matKhau = findViewById(R.id.matKhauAdmin);
-        canhBao = findViewById(R.id.canhBao);
-        dangNhap = findViewById(R.id.loginAdmin);
+        taiKhoan = findViewById(R.id.txtTaiKhoan_Admin);
+        matKhau = findViewById(R.id.txtMatKhau_Admin);
+        canhBao = findViewById(R.id.txtCanhBao);
+        dangNhap = findViewById(R.id.btnLogin_Admin);
 
 
         dangNhap.setOnClickListener(new View.OnClickListener() {
