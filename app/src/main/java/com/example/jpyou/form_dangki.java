@@ -1,11 +1,9 @@
 package com.example.jpyou;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,12 +26,12 @@ public class form_dangki extends AppCompatActivity {
             return insets;
         });
 
-
+//click button "Đăng Ký" quay lại login_nguoidung
         btn_DangKy = findViewById(R.id.btnDangKy);
         btn_DangKy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(form_dangki.this, giaodien_nguoidung.class);
+                Intent intent = new Intent(form_dangki.this, login_nguoidung.class);
                 startActivity(intent);
             }
         });

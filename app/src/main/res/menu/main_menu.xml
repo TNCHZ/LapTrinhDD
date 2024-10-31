@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/app_bar_search"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="Search"
+        app:actionViewClass="android.widget.SearchView"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/profile"
+        android:icon="@drawable/icon_avatar"
+        android:title="Profile"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/download"
+        android:icon="@android:drawable/stat_sys_download"
+        android:title="download"
+        app:showAsAction="ifRoom" />
+    <item android:title="about" />
+</menu>

@@ -6,26 +6,29 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/jpyou"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/jpyou"
         android:supportsRtl="true"
         android:theme="@style/Theme.Jpyou"
         tools:targetApi="31">
         <activity
-            android:name=".giaodien_admin"
+            android:name=".interface_nguoidung"
+            android:exported="false" />
+        <activity
+            android:name=".login_admin"
             android:exported="false" />
         <activity
             android:name=".form_dangki"
             android:exported="false" />
         <activity
-            android:name=".giaodien_nhanvien"
+            android:name=".login_nhanvien"
             android:exported="false" />
         <activity
             android:name=".menu_admin"
             android:exported="false" />
         <activity
-            android:name=".giaodien_nguoidung"
+            android:name=".login_nguoidung"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

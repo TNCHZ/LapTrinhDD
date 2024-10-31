@@ -15,15 +15,15 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class giaodien_nguoidung extends AppCompatActivity {
-    private Button btn_DangKy;
+public class login_nguoidung extends AppCompatActivity {
+    private Button btn_DangKy, btn_DangNhap;
     private EditText txt_Pass;
     private CheckBox check_show;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.giaodien_ngdung);
+        setContentView(R.layout.login_nguoidung);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -44,11 +44,22 @@ public class giaodien_nguoidung extends AppCompatActivity {
                 }
             }
         });
+
+
         btn_DangKy = findViewById(R.id.btnDangKy_NguoiDung);
         btn_DangKy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(giaodien_nguoidung.this, form_dangki.class);
+                Intent intent = new Intent(login_nguoidung.this, form_dangki.class);
+                startActivity(intent);
+            }
+        });
+
+        btn_DangNhap = findViewById(R.id.btnLogin_NguoiDung);
+        btn_DangNhap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(login_nguoidung.this, interface_nguoidung.class);
                 startActivity(intent);
             }
         });
