@@ -16,7 +16,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 
-public class giaodien_admin extends AppCompatActivity {
+public class login_admin extends AppCompatActivity {
 
     private EditText taiKhoan, matKhau;
     private TextView canhBao;
@@ -27,7 +27,7 @@ public class giaodien_admin extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.giaodien_admin);
+        setContentView(R.layout.login_admin);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -44,7 +44,7 @@ public class giaodien_admin extends AppCompatActivity {
             public void onClick(View view) {
                 if(taiKhoan.getText().toString().equals("admin") && matKhau.getText().toString().equals("Admin@123"))
                 {
-                    Intent intent = new Intent(giaodien_admin.this, menu_admin.class);
+                    Intent intent = new Intent(login_admin.this, menu_admin.class);
                     startActivity(intent);
                 }
                 else
