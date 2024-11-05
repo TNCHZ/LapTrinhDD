@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,30 +12,41 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class form_dangki extends AppCompatActivity {
+public class choose_roles extends AppCompatActivity {
 
-    private Button btn_DangKy ;
+    private ImageButton btn_Staff;
+    private ImageButton btn_Patient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.form_dangki);
+        setContentView(R.layout.choose_roles);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-//click button "Đăng Ký" quay lại login_nguoidung
-        btn_DangKy = findViewById(R.id.btnDangKy);
-        btn_DangKy.setOnClickListener(new View.OnClickListener() {
+
+
+
+        btn_Staff = findViewById(R.id.btnRole_Staff);
+        btn_Patient = findViewById(R.id.btnRole_Patient);
+        Intent intent = new Intent(choose_roles.this, login_user.class);
+
+        btn_Staff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(form_dangki.this, login_user.class);
                 startActivity(intent);
             }
         });
 
+        btn_Patient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(intent);
+            }
+        });
     }
 }

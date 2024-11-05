@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Jpyou"
         tools:targetApi="31">
         <activity
+            android:name=".login_user"
+            android:exported="false" />
+        <activity
             android:name=".interface_nguoidung"
             android:exported="false" />
         <activity
@@ -22,13 +25,10 @@
             android:name=".form_dangki"
             android:exported="false" />
         <activity
-            android:name=".login_nhanvien"
-            android:exported="false" />
-        <activity
             android:name=".menu_admin"
             android:exported="false" />
         <activity
-            android:name=".login_nguoidung"
+            android:name=".choose_roles"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
