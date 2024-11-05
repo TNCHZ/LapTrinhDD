@@ -12,9 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Jpyou"
         tools:targetApi="31">
+        <activity android:name=".admin_taongdung"
+            android:parentActivityName=".menu_admin"
+            />
         <activity
-            android:name=".giaodien_admin"
-            android:exported="false" />
+            android:name=".giaodien_nguoidung"
+            android:exported="false"/>
         <activity
             android:name=".form_dangki"
             android:exported="false" />
@@ -23,9 +26,10 @@
             android:exported="false" />
         <activity
             android:name=".menu_admin"
-            android:exported="false" />
+            android:parentActivityName=".giaodien_admin"
+            />
         <activity
-            android:name=".giaodien_nguoidung"
+            android:name=".giaodien_admin"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

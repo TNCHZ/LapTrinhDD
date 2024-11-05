@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/main"
+    >
 
 
     <TextView
@@ -14,13 +16,22 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <GridView
-        android:id="@+id/gridView"
+    <Button
+        android:id="@+id/btn_taoNgDung"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:numColumns="3"
-        android:verticalSpacing="10dp"
-        android:horizontalSpacing="10dp"
-        android:gravity="center" />
+        android:layout_height="wrap_content"
+        android:text="Tạo tài khoản nhân viên" />
+
+    <Button
+        android:id="@+id/btn_listNgDung"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Danh sách người dùng" />
+
+    <Button
+        android:id="@+id/btn_listNhanVien"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Danh sách nhân viên" />
 
 </LinearLayout>
