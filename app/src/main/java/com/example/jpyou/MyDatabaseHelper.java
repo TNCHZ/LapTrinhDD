@@ -176,5 +176,18 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return users;
     }
 
+    public boolean isDelete_user(int id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // Execute the delete operation
+        int result = db.delete("NguoiDung", "nguoidungID = ?", new String[]{String.valueOf(id)});
+
+        db.close(); // Close the database connection
+
+        // Check if a row was deleted (result > 0 means success)
+        return result > 0;
+    }
+
 
 }
