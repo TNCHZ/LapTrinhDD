@@ -39,6 +39,14 @@ public class menu_admin extends AppCompatActivity {
             }
         });
 
+        btn_listNgDung.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(menu_admin.this, admin_listngdung.class);
+                startActivity(intent);
+            }
+        });
+
 
 
 

@@ -12,6 +12,8 @@ import androidx.annotation.Nullable;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyDatabaseHelper extends SQLiteOpenHelper {
     private Context context;
@@ -153,6 +155,26 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return vaitroID; // Will return null if not found
     }
 
+    public List<String> getAllUser(String vaitroID) {
+        List<String> users = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT nguoidungID, TenNguoiDung FROM NguoiDung WHERE vaitroID = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{vaitroID});
+
+        if (cursor.moveToFirst()) {
+            do {
+                @SuppressLint("Range") String userName = cursor.getString(cursor.getColumnIndex("TenNguoiDung"));
+                @SuppressLint("Range") String nameID = cursor.getString(cursor.getColumnIndex("nguoidungID"));
+                users.add(nameID + " " + userName);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return users;
+    }
 
 
 }

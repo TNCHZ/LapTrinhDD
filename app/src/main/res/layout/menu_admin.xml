@@ -34,4 +34,10 @@
         android:layout_height="wrap_content"
         android:text="Danh sách nhân viên" />
 
+    <Button
+        android:id="@+id/btn_thongKe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Thống kê doanh số" />
+
 </LinearLayout>

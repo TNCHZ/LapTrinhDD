@@ -19,16 +19,22 @@
             android:name=".interface_nguoidung"
             android:exported="false" />
         <activity
-            android:name=".login_admin"
+            android:name=".choose_roles"
             android:exported="false" />
         <activity
             android:name=".form_dangki"
             android:exported="false" />
         <activity
-            android:name=".menu_admin"
-            android:exported="false" />
+            android:name=".admin_listngdung"
+            android:parentActivityName=".menu_admin"/>
         <activity
-            android:name=".choose_roles"
+            android:name=".admin_taongdung"
+            android:parentActivityName=".menu_admin"/>
+        <activity
+            android:name=".menu_admin"
+            android:parentActivityName=".login_admin"/>
+        <activity
+            android:name=".login_admin"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
