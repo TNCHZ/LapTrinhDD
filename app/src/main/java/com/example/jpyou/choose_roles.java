@@ -16,6 +16,7 @@ public class choose_roles extends AppCompatActivity {
 
     private ImageButton btn_Staff;
     private ImageButton btn_Patient;
+    private int buttonID_role_ChooseRoles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +36,12 @@ public class choose_roles extends AppCompatActivity {
         btn_Patient = findViewById(R.id.btnRole_Patient);
         Intent intent = new Intent(choose_roles.this, login_user.class);
 
+
         btn_Staff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                buttonID_role_ChooseRoles = R.id.btnRole_Staff;
+                intent.putExtra("role", buttonID_role_ChooseRoles);
                 startActivity(intent);
             }
         });
@@ -45,6 +49,8 @@ public class choose_roles extends AppCompatActivity {
         btn_Patient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                buttonID_role_ChooseRoles = R.id.btnRole_Patient;
+                intent.putExtra("role", buttonID_role_ChooseRoles);
                 startActivity(intent);
             }
         });

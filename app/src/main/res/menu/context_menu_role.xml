@@ -4,10 +4,14 @@
 
     <item
         android:id="@+id/role_patient"
-        android:title="Bệnh Nhân"
+        android:title="Bệnh nhân"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/role_staff"
-        android:title="Nhân Viên"
+        android:title="Nhân viên"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/role_admin"
+        android:title="Admin"
         app:showAsAction="ifRoom" />
 </menu>

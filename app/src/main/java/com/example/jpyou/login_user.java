@@ -20,10 +20,10 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class login_user extends AppCompatActivity {
-    private Button btn_DangKy, btn_DangNhap;
-    private EditText txt_Pass;
-    private CheckBox check_show;
-    private Button btn_Role;
+    private Button btnDangKy, btnDangNhap;
+    private EditText txtPass;
+    private CheckBox checkShowPassword;
+    private Button btnRole;
 
     //tạo và lấy menu
     @Override
@@ -34,13 +34,19 @@ public class login_user extends AppCompatActivity {
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
-        btn_Role = findViewById(R.id.btnRole);
+        btnRole = findViewById(R.id.btnRole);
         if(item.getItemId() == R.id.role_staff){
-            btn_Role.setText("Nhân viên");
+            btnRole.setText("Nhân viên");
             Toast.makeText(this, "Nhân viên", Toast.LENGTH_SHORT).show();
         } else if (item.getItemId() == R.id.role_patient){
-            btn_Role.setText("Bệnh nhân");
+            btnRole.setText("Bệnh nhân");
             Toast.makeText(this, "Bệnh nhân", Toast.LENGTH_SHORT).show();
+        } else if (item.getItemId() == R.id.role_admin) {
+            btnRole.setText("Admin");
+            Toast.makeText(this, "Admin", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(login_user.this, login_admin.class);
+            startActivity(intent);
         }
         return super.onContextItemSelected(item);
     }
@@ -58,46 +64,63 @@ public class login_user extends AppCompatActivity {
 
 
         //thiết lập button lấy menu
-        btn_Role = findViewById(R.id.btnRole);
-        registerForContextMenu(btn_Role);
+        btnRole = findViewById(R.id.btnRole);
+        registerForContextMenu(btnRole);
+
+        //thiết lập role
+        role();
 
         //Ẩn/Hiện Password
+        txtPass = findViewById(R.id.txtMatKhau_User);//lấy id EditText Password
+        checkShowPassword = findViewById(R.id.checkPassword_User);//lấy id CheckBox Show
         showHintPassword();
 
         //Chuyển layout
+        btnDangKy = findViewById(R.id.btnDangKy_User);
+        btnDangNhap = findViewById(R.id.btnLogin_User);
         convert();
     }
 
+    private void role() {
+        Intent give = getIntent();
+        int buttonID_role_User = give.getIntExtra("role", -1);
+
+        int roleStaff = R.id.btnRole_Staff;
+        int rolePatient = R.id.btnRole_Patient;
+        if (buttonID_role_User == roleStaff){
+            btnRole.setText("Nhân viên");
+        }
+        if (buttonID_role_User == rolePatient){
+            btnRole.setText("Bệnh nhân");
+        }
+    }
+
     private void showHintPassword() {
-        // CheckBox -> Show Password
-        txt_Pass = findViewById(R.id.txtMatKhau_NguoiDung);//lấy id EditText Password
-        check_show = findViewById(R.id.showPassword);//lấy id CheckBox Show
         //Hàm Show/Hint Password
-        check_show.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        checkShowPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if(isChecked){
-                    txt_Pass.setTransformationMethod(null);
+                    txtPass.setTransformationMethod(null);
                 }else{
-                    txt_Pass.setTransformationMethod(new PasswordTransformationMethod());
-                    txt_Pass.setSelection(txt_Pass.getText().length());
+                    txtPass.setTransformationMethod(new PasswordTransformationMethod());
+                    txtPass.setSelection(txtPass.getText().length());
                 }
             }
         });
     }
 
     private void convert() {
-        btn_DangKy = findViewById(R.id.btnDangKy_NguoiDung);
-        btn_DangKy.setOnClickListener(new View.OnClickListener() {
+        //Chuyển  layout from_dang_ky
+        btnDangKy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(login_user.this, form_dangki.class);
+                Intent intent = new Intent(login_user.this, form_dang_ky.class);
                 startActivity(intent);
             }
         });
 
-        btn_DangNhap = findViewById(R.id.btnLogin_NguoiDung);
-        btn_DangNhap.setOnClickListener(new View.OnClickListener() {
+        btnDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(login_user.this, interface_nguoidung.class);
