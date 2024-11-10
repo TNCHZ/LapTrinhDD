@@ -1,5 +1,4 @@
 package com.example.jpyou;
-
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,10 +9,11 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class MyDatabaseHelper extends SQLiteOpenHelper {
     private Context context;
@@ -29,84 +29,166 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createVaitroTable = "CREATE TABLE Vaitro (" +
-                "vaitroID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "TenVaiTro TEXT NOT NULL);";
-
-        String createNguoiDungTable = "CREATE TABLE NguoiDung (" +
+        // Tạo bảng ThongTinNguoiDung
+        String createThongTinNguoiDungTable = "CREATE TABLE ThongTinNguoiDung (" +
                 "nguoidungID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "TenNguoiDung TEXT NOT NULL, " +
                 "gioiTinh TEXT, " +
                 "ngaySinh TEXT, " +
-                "email TEXT, " +
-                "soDT TEXT, " +
-                "CCCD TEXT, " +
-                "username TEXT NOT NULL, " +
-                "password TEXT NOT NULL, " +
-                "vaitroID INTEGER, " +
-                "FOREIGN KEY(vaitroID) REFERENCES Vaitro(vaitroID));";
+                "diaChi TEXT, " +
+                "email TEXT UNIQUE, " +
+                "soDT TEXT UNIQUE, " +
+                "CCCD TEXT UNIQUE);";
 
-        String createBenhNhanTable = "CREATE TABLE BenhNhan (" +
-                "benhnhanID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "nguoidungID INTEGER, " +
+        // Tạo bảng NguoiDung
+        String createNguoiDungTable = "CREATE TABLE NguoiDung (" +
+                "nguoidungID INTEGER PRIMARY KEY, " +
+                "username TEXT NOT NULL UNIQUE, " +
+                "password TEXT NOT NULL, " +
+                "active INTEGER NOT NULL, " +
+                "createdDay TEXT NOT NULL, " +
+                "chucVu TEXT, " +
+                "FOREIGN KEY(nguoidungID) REFERENCES ThongTinNguoiDung(nguoidungID));";
+
+
+        // Tạo bảng BacSi
+        String createBacSiTable = "CREATE TABLE BacSi (" +
+                "nguoidungID INTEGER PRIMARY KEY, " +
+                "chuyenKhoa TEXT NOT NULL, " +
                 "FOREIGN KEY(nguoidungID) REFERENCES NguoiDung(nguoidungID));";
 
-        db.execSQL(createVaitroTable);
-        db.execSQL(createNguoiDungTable);
-        db.execSQL(createBenhNhanTable);
+        String createYTaTable = "CREATE TABLE YTa (" +
+                "nguoidungID INTEGER PRIMARY KEY, " +
+                "chuyenKhoa TEXT NOT NULL, " +
+                "FOREIGN KEY(nguoidungID) REFERENCES NguoiDung(nguoidungID));";
 
-        String insertVaiTro1 = "INSERT INTO Vaitro (TenVaiTro) VALUES ('NguoiDangKi');";
-        String insertVaiTro2 = "INSERT INTO Vaitro (TenVaiTro) VALUES ('BacSi');";
-        db.execSQL(insertVaiTro1);
-        db.execSQL(insertVaiTro2);
+        String createBenhNhanTable = "CREATE TABLE BenhNhan (" +
+                "nguoidungID INTEGER PRIMARY KEY, " +
+                "FOREIGN KEY(nguoidungID) REFERENCES NguoiDung(nguoidungID));";
+
+        // Tạo bảng LichHen
+        String createLichHenTable = "CREATE TABLE LichHen (" +
+                "lichhenID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "bacsiID INTEGER, " +
+                "benhnhanID INTEGER, " +
+                "ngayGioKham TEXT NOT NULL, " +
+                "soThuTuKham INTEGER, " +
+                "tinhTrangHen TEXT, " +
+                "FOREIGN KEY(bacsiID) REFERENCES BacSi(nguoidungID), " +
+                "FOREIGN KEY(benhnhanID) REFERENCES BenhNhan(nguoidungID));";
+
+        // Tạo bảng ketQuaChuanDoan
+        String createKetQuaChuanDoanTable = "CREATE TABLE ketQuaChuanDoan (" +
+                "ketquachuandoanID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "tenKetQuaChuanDoan TEXT NOT NULL, " +
+                "trieuChung TEXT, " +
+                "ngayKeToa TEXT, " +
+                "lichhenID INTEGER, " +
+                "FOREIGN KEY(lichhenID) REFERENCES LichHen(lichhenID));";
+
+        // Tạo bảng Thuoc
+        String createThuocTable = "CREATE TABLE Thuoc (" +
+                "thuocID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "tenThuoc TEXT NOT NULL, " +
+                "huongDanSuDung TEXT);";
+
+        // Tạo bảng ToaThuoc
+        String createToaThuocTable = "CREATE TABLE ToaThuoc (" +
+                "toathuocID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "thuocID INTEGER, " +
+                "ketquachuandoanID INTEGER, " +
+                "FOREIGN KEY(thuocID) REFERENCES Thuoc(thuocID), " +
+                "FOREIGN KEY(ketquachuandoanID) REFERENCES ketQuaChuanDoan(ketquachuandoanID));";
+
+        // Thực thi các lệnh tạo bảng
+        db.execSQL(createYTaTable);
+        db.execSQL(createBenhNhanTable);
+        db.execSQL(createThongTinNguoiDungTable);
+        db.execSQL(createNguoiDungTable);
+        db.execSQL(createBacSiTable);
+        db.execSQL(createLichHenTable);
+        db.execSQL(createKetQuaChuanDoanTable);
+        db.execSQL(createThuocTable);
+        db.execSQL(createToaThuocTable);
     }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS Vaitro");
-        db.execSQL("DROP TABLE IF EXISTS NguoiDung");
+        // Xóa các bảng nếu chúng tồn tại
+        db.execSQL("DROP TABLE IF EXISTS YTa");
+        db.execSQL("DROP TABLE IF EXISTS ToaThuoc");
+        db.execSQL("DROP TABLE IF EXISTS Thuoc");
+        db.execSQL("DROP TABLE IF EXISTS ketQuaChuanDoan");
+        db.execSQL("DROP TABLE IF EXISTS LichHen");
         db.execSQL("DROP TABLE IF EXISTS BenhNhan");
+        db.execSQL("DROP TABLE IF EXISTS BacSi");
+        db.execSQL("DROP TABLE IF EXISTS NguoiDung");
+        db.execSQL("DROP TABLE IF EXISTS ThongTinNguoiDung");
+
+        // Gọi lại onCreate để tạo lại các bảng với cấu trúc mới
         onCreate(db);
     }
 
-    public void addNguoiDung(String tenNguoiDung, String gioiTinh, String ngaySinh, String email, String soDT, String cccd, String username, String password, int vaitroID) {
+
+    public void addNguoiDung(String tenNguoiDung, String gioiTinh, String ngaySinh, String diaChi, String email, String soDT, String cccd, String chuyenKhoa, String chucVu) {
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
 
-        values.put("TenNguoiDung", tenNguoiDung);
-        values.put("gioiTinh", gioiTinh);
-        values.put("ngaySinh", ngaySinh);
-        values.put("email", email);
-        values.put("soDT", soDT);
-        values.put("CCCD", cccd);
-        values.put("username", username);
-        values.put("password", hashPassword(password));
-        values.put("vaitroID", vaitroID);
+        try {
+            // Bước 1: Thêm người dùng vào bảng ThongTinNguoiDung
+            ContentValues thongTinValues = new ContentValues();
+            thongTinValues.put("TenNguoiDung", tenNguoiDung);
+            thongTinValues.put("gioiTinh", gioiTinh);
+            thongTinValues.put("ngaySinh", ngaySinh);
+            thongTinValues.put("diaChi", diaChi);
+            thongTinValues.put("email", email);
+            thongTinValues.put("soDT", soDT);
+            thongTinValues.put("CCCD", cccd);
+            long nguoiDungID = db.insert("ThongTinNguoiDung", null, thongTinValues);
 
-        long result = db.insert("NguoiDung", null, values);
-        if(result == -1)
-            Toast.makeText(context, "Khong the duoc", Toast.LENGTH_SHORT).show();
-        else
-            Toast.makeText(context, "Thanh cong", Toast.LENGTH_SHORT).show();
-        db.close();
+            // Kiểm tra xem việc chèn vào ThongTinNguoiDung có thành công không
+            if (nguoiDungID == -1) {
+                Toast.makeText(context, "Không thể thêm ThongTinNguoiDung", Toast.LENGTH_SHORT).show();
+                return; // Nếu không thành công thì dừng thực hiện thêm vào bảng NguoiDung
+            }
+
+            // Bước 2: Thêm thông tin tài khoản người dùng vào bảng NguoiDung
+            ContentValues nguoiDungValues = new ContentValues();
+            nguoiDungValues.put("nguoidungID", nguoiDungID); // Sử dụng ID vừa tạo ở bước 1
+            nguoiDungValues.put("username", soDT);
+            nguoiDungValues.put("password", cccd); // Hàm hashPassword để mã hóa mật khẩu
+            nguoiDungValues.put("active", 1); // Đặt giá trị mặc định cho active
+            nguoiDungValues.put("createdDay", getCurrentDate()); // Hàm getCurrentDate để lấy ngày hiện tại
+            nguoiDungValues.put("chucVu", chucVu);
+            long result = db.insert("NguoiDung", null, nguoiDungValues);
+
+            ContentValues bacSiValues = new ContentValues();
+            bacSiValues.put("chuyenKhoa", chuyenKhoa);
+            long result2 = db.insert("BacSi", null, bacSiValues);
+
+            // Kiểm tra kết quả khi thêm vào bảng NguoiDung
+            if (result == -1 && result2 == -1) {
+                Toast.makeText(context, "Không thể thêm NguoiDung", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context, "Thêm người dùng thành công", Toast.LENGTH_SHORT).show();
+            }
+
+
+        } catch (Exception e) {
+            // Xử lý lỗi nếu có
+            Toast.makeText(context, "Lỗi khi thêm người dùng: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        } finally {
+            // Đảm bảo đóng cơ sở dữ liệu trong mọi trường hợp
+            if (db != null && db.isOpen()) {
+                db.close();
+            }
+        }
     }
 
-    private String hashPassword(String password) {
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(password.getBytes());
-            StringBuilder hexString = new StringBuilder();
 
-            for (byte b : hash) {
-                String hex = Integer.toHexString(0xff & b);
-                if (hex.length() == 1) hexString.append('0');
-                hexString.append(hex);
-            }
-            return hexString.toString();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            return null;
-        }
+    private String getCurrentDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        return sdf.format(new Date());
     }
 
 
@@ -131,42 +213,27 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         }
 
         // Hash the input password and compare with the stored hash
-        String hashedInputPassword = hashPassword(plainPassword);
-        return storedHashedPassword.equals(hashedInputPassword); // Return true if they match
+        return true;
     }
 
 
-    @SuppressLint("Range")
-    public Integer getVaitroID(String chucVu) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT vaitroID FROM Vaitro WHERE TenVaiTro = ?";
-        Cursor cursor = db.rawQuery(query, new String[]{chucVu});
 
-        Integer vaitroID = null; // Initialize to null to indicate not found
-
-        if (cursor.moveToFirst()) {
-            // Retrieve the actual value of vaitroID from the cursor
-            vaitroID = cursor.getInt(cursor.getColumnIndex("vaitroID"));
-        }
-
-        cursor.close();
-        db.close();
-
-        return vaitroID; // Will return null if not found
-    }
-
-    public List<String> getAllUser(String vaitroID) {
+    public List<String> getAllUser(String excludeRole) {
         List<String> users = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "SELECT nguoidungID, TenNguoiDung FROM NguoiDung WHERE vaitroID = ?";
-        Cursor cursor = db.rawQuery(query, new String[]{vaitroID});
+        String query = "SELECT ThongTinNguoiDung.nguoidungID, ThongTinNguoiDung.TenNguoiDung, NguoiDung.vaitro " +
+                "FROM ThongTinNguoiDung " +
+                "JOIN NguoiDung ON ThongTinNguoiDung.nguoidungID = NguoiDung.nguoidungID " +
+                "WHERE NguoiDung.vaitro != ?";
+
+        Cursor cursor = db.rawQuery(query, new String[]{excludeRole});
 
         if (cursor.moveToFirst()) {
             do {
+                @SuppressLint("Range") String userId = cursor.getString(cursor.getColumnIndex("nguoidungID"));
                 @SuppressLint("Range") String userName = cursor.getString(cursor.getColumnIndex("TenNguoiDung"));
-                @SuppressLint("Range") String nameID = cursor.getString(cursor.getColumnIndex("nguoidungID"));
-                users.add(nameID + " " + userName);
+                users.add(userId + " " + userName);
             } while (cursor.moveToNext());
         }
 
@@ -175,20 +242,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         return users;
     }
-
-    public boolean isDelete_user(int id)
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        // Execute the delete operation
-        int result = db.delete("NguoiDung", "nguoidungID = ?", new String[]{String.valueOf(id)});
-
-        db.close(); // Close the database connection
-
-        // Check if a row was deleted (result > 0 means success)
-        return result > 0;
-    }
-
 
 
 }

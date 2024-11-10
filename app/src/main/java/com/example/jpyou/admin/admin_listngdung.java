@@ -3,7 +3,6 @@ package com.example.jpyou.admin;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -41,9 +40,9 @@ public class admin_listngdung extends AppCompatActivity {
         db = new MyDatabaseHelper(this); // Initialize the database helper
 
         // Retrieve the list of users from the database
-        List<String> users = db.getAllUser("1"); // Replace "1" with the desired vaitroID
+        List<String> users = db.getAllUser("NguoiDangKi"); // Replace "1" with the desired vaitroID
         if (users.isEmpty()) {
-            Log.d("User List", "No users found for the specified role.");
+            Toast.makeText(this, "Lỗi", Toast.LENGTH_LONG).show();
         } else {
             // Create an ArrayAdapter and set it to the ListView
             ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, users);
@@ -66,20 +65,12 @@ public class admin_listngdung extends AppCompatActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Chọn việc cần làm với người dùng này");
-        builder.setItems(new CharSequence[]{"Xóa người dùng", "Cập nhật thông tin"}, new DialogInterface.OnClickListener() {
+        builder.setItems(new CharSequence[]{"Dừng hoạt động", "Cập nhật thông tin"}, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
-                    case 0: {
-                        String[] parts = selectedUser.split(" ", 2);
-                        int selectedUserId = Integer.parseInt(parts[0]); // Parse ID
-                        if (db.isDelete_user(selectedUserId)) { // Assuming delete_user returns true if successful
-                            Toast.makeText(admin_listngdung.this, "Người dùng đã được xóa", Toast.LENGTH_SHORT).show();
-                            recreate(); // Restart activity to reload data
-                        } else {
-                            Toast.makeText(admin_listngdung.this, "Không thể xóa người dùng", Toast.LENGTH_SHORT).show();
-                        }
-                    }
+                    case 0:
+                        break;
                     case 1: // Update User
 
                         break;

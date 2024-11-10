@@ -1,10 +1,15 @@
 package com.example.jpyou.admin;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
@@ -18,11 +23,15 @@ import com.example.jpyou.R;
 
 public class admin_taongdung extends AppCompatActivity {
 
-    TextView txtName, txtNamSinh, txtDiaChi, txtCCCD, txtSDT, txtEmail, txtChucVu;
-    RadioButton rdNam;
-    String gioiTinh;
-    Button bt;
+    private TextView txtName, txtNamSinh, txtDiaChi, txtCCCD, txtSDT, txtEmail, txtChuyenKhoa;
+    private RadioButton rdNam;
+    private String gioiTinh;
+    private Button bt;
+    private Spinner sp;
+    private String chucVu;
+    private String[] roles = {"Bác sĩ", "Y tá"};
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,17 +42,39 @@ public class admin_taongdung extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        sp = findViewById(R.id.spinner_role);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, roles);
+
+// Thiết lập layout khi mục được chọn
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+// Gán adapter cho Spinner
+        sp.setAdapter(adapter);
+        sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                chucVu = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
         txtName = findViewById(R.id.txtName);
         txtNamSinh = findViewById(R.id.txtNamSinh);
         txtDiaChi = findViewById(R.id.txtDiaChi);
         txtCCCD = findViewById(R.id.txtCCCD);
         txtSDT = findViewById(R.id.txtSDT);
         txtEmail = findViewById(R.id.txtEmail);
-        txtChucVu = findViewById(R.id.txtChucVu);
+        txtChuyenKhoa = findViewById(R.id.txtChuyenKhoa);
         rdNam = findViewById(R.id.rdNam);
         bt = findViewById(R.id.btn_dangKiAdmin);
 
-        gioiTinh = rdNam.isChecked() ? "Male" : "Female";
+
+        gioiTinh = rdNam.isChecked() ? "Nam" : "Nữ";
+
 
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,19 +86,19 @@ public class admin_taongdung extends AppCompatActivity {
                 String cccd = txtCCCD.getText().toString();
                 String sdt = txtSDT.getText().toString();
                 String email = txtEmail.getText().toString();
-                String chucVu = txtChucVu.getText().toString();
-                int chucVuID = mydb.getVaitroID(chucVu);
+                String chuyenKhoa = txtChuyenKhoa.getText().toString();
+
 
                 mydb.addNguoiDung(
                         name,
                         gioiTinh,
                         namSinh,
+                        diaChi,
                         email,
                         sdt,
                         cccd,
-                        sdt,  // Replace with actual username
-                        cccd,  // Replace with actual password
-                        chucVuID  // Assuming ChucVu holds a numeric role ID
+                        chuyenKhoa,
+                        chucVu
                 );
             }
         });

@@ -19,6 +19,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.jpyou.admin.login_admin;
+
 public class login_user extends AppCompatActivity {
     private Button btnDangKy, btnDangNhap;
     private EditText txtPass;
@@ -44,7 +46,6 @@ public class login_user extends AppCompatActivity {
         } else if (item.getItemId() == R.id.role_admin) {
             btnRole.setText("Admin");
             Toast.makeText(this, "Admin", Toast.LENGTH_SHORT).show();
-
             Intent intent = new Intent(login_user.this, login_admin.class);
             startActivity(intent);
         }
@@ -89,9 +90,11 @@ public class login_user extends AppCompatActivity {
         int rolePatient = R.id.btnRole_Patient;
         if (buttonID_role_User == roleStaff){
             btnRole.setText("Nhân viên");
+            btnDangKy = findViewById(R.id.btnDangKy_User);
+            btnDangKy.setVisibility(View.GONE);
         }
         if (buttonID_role_User == rolePatient){
-            btnRole.setText("Bệnh nhân");
+            btnRole.setText("Người đăng kí");
         }
     }
 

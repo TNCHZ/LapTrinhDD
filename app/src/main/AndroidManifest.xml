@@ -16,15 +16,17 @@
             android:name=".login_user"
             android:exported="false" />
         <activity
-            android:name=".interface_nguoidung"
+
+            android:name=".ngaykhambenh_lichsukham"
             android:exported="false" />
         <activity
-            android:name=".choose_roles"
+            android:name=".admin.login_admin"
             android:exported="false" />
-        <activity android:name=".admin.admin_capnhat"
+        <activity
+            android:name=".admin.admin_capnhat"
             android:exported="false"/>
         <activity
-            android:name=".form_dangki"
+            android:name=".form_dang_ky"
             android:exported="false" />
         <activity
             android:name=".admin.admin_listngdung"
@@ -33,10 +35,14 @@
             android:name=".admin.admin_taongdung"
             android:parentActivityName=".admin.menu_admin"/>
         <activity
-            android:name=".admin.menu_admin"
-            android:parentActivityName=".admin.login_admin"/>
+            android:name=".choose_roles"
+            android:exported="false"/>
         <activity
-            android:name=".admin.login_admin"
+            android:name=".admin.menu_admin"
+            android:parentActivityName=".admin.login_admin"
+            android:exported="false"/>
+        <activity
+            android:name=".interface_nguoidung"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

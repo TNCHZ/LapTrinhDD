@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home"
+        android:title="trang chủ" />
+    <item
+        android:id="@+id/search"
+        android:title="Thông tin khám bệnh" />
+    <item
+        android:id="@+id/settings"
+        android:title="Tài khoản" />
+</menu>

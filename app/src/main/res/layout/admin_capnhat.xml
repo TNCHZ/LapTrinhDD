@@ -77,9 +77,20 @@
         android:inputType="text"
         android:hint="Email" />
 
+    <EditText
+        android:id="@+id/txtChuyenKhoa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Chuyên khoa" />
+
+
     <Button
-        android:id="@+id/btn_dangKiAdmin"
+        android:id="@+id/btn_capNhatAdmin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Cập nhật" />
+
+
 </LinearLayout>
