@@ -18,7 +18,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.jpyou.R;
 
 
-public class login_admin extends AppCompatActivity {
+public class AdminLogin extends AppCompatActivity {
 
     private EditText taiKhoan, matKhau;
     private TextView canhBao;
@@ -46,7 +46,7 @@ public class login_admin extends AppCompatActivity {
             public void onClick(View view) {
                 if(taiKhoan.getText().toString().equals("admin") && matKhau.getText().toString().equals("Admin@123"))
                 {
-                    Intent intent = new Intent(login_admin.this, menu_admin.class);
+                    Intent intent = new Intent(AdminLogin.this, AdminMenu.class);
                     startActivity(intent);
                 }
                 else

@@ -19,9 +19,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.jpyou.admin.login_admin;
+import com.example.jpyou.admin.AdminLogin;
 
-public class login_user extends AppCompatActivity {
+public class UserLogin extends AppCompatActivity {
     private Button btnDangKy, btnDangNhap;
     private EditText txtPass;
     private CheckBox checkShowPassword;
@@ -46,7 +46,7 @@ public class login_user extends AppCompatActivity {
         } else if (item.getItemId() == R.id.role_admin) {
             btnRole.setText("Admin");
             Toast.makeText(this, "Admin", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(login_user.this, login_admin.class);
+            Intent intent = new Intent(UserLogin.this, AdminLogin.class);
             startActivity(intent);
         }
         return super.onContextItemSelected(item);
@@ -118,7 +118,7 @@ public class login_user extends AppCompatActivity {
         btnDangKy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(login_user.this, form_dang_ky.class);
+                Intent intent = new Intent(UserLogin.this, form_dang_ky.class);
                 startActivity(intent);
             }
         });
@@ -126,7 +126,7 @@ public class login_user extends AppCompatActivity {
         btnDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(login_user.this, interface_nguoidung.class);
+                Intent intent = new Intent(UserLogin.this, UserInterface.class);
                 startActivity(intent);
             }
         });

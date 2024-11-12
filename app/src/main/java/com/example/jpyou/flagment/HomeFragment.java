@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.jpyou.R;
 
-public class trangchu_fragment extends Fragment {
+public class HomeFragment extends Fragment {
 
-    public trangchu_fragment() {
+    public HomeFragment() {
         // Required empty public constructor
     }
 
@@ -19,7 +19,7 @@ public class trangchu_fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the fragment's layout
-        View view = inflater.inflate(R.layout.fragment_trangchu, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         // Lấy các Button từ layout của Fragment
         Button button1 = view.findViewById(R.id.button);

@@ -11,12 +11,12 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.jpyou.R;
 
-public class admin_capnhat extends AppCompatActivity {
+public class AdminUpdate extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.admin_capnhat);
+        setContentView(R.layout.update_admin);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);

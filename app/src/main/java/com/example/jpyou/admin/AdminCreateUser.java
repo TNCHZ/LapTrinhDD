@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
@@ -21,7 +20,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.jpyou.MyDatabaseHelper;
 import com.example.jpyou.R;
 
-public class admin_taongdung extends AppCompatActivity {
+public class AdminCreateUser extends AppCompatActivity {
 
     private TextView txtName, txtNamSinh, txtDiaChi, txtCCCD, txtSDT, txtEmail, txtChuyenKhoa;
     private RadioButton rdNam;
@@ -36,7 +35,7 @@ public class admin_taongdung extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.admin_taongdung);
+        setContentView(R.layout.create_user_admin);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -79,7 +78,7 @@ public class admin_taongdung extends AppCompatActivity {
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MyDatabaseHelper mydb = new MyDatabaseHelper(admin_taongdung.this);
+                MyDatabaseHelper mydb = new MyDatabaseHelper(AdminCreateUser.this);
                 String name = txtName.getText().toString();
                 String namSinh = txtNamSinh.getText().toString();
                 String diaChi = txtDiaChi.getText().toString();

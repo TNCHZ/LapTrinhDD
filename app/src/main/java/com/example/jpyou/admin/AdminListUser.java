@@ -22,7 +22,7 @@ import com.example.jpyou.R;
 
 import java.util.List;
 
-public class admin_listngdung extends AppCompatActivity {
+public class AdminListUser extends AppCompatActivity {
     private ListView lv;
     private MyDatabaseHelper db;
 
@@ -30,7 +30,7 @@ public class admin_listngdung extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.admin_listngdung);
+        setContentView(R.layout.list_user_admin);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);

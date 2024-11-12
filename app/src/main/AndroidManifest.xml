@@ -13,36 +13,35 @@
         android:theme="@style/Theme.Jpyou"
         tools:targetApi="31">
         <activity
-            android:name=".login_user"
+            android:name=".UserLogin"
             android:exported="false" />
         <activity
-
             android:name=".ngaykhambenh_lichsukham"
             android:exported="false" />
         <activity
-            android:name=".admin.login_admin"
+            android:name=".admin.AdminLogin"
             android:exported="false" />
         <activity
-            android:name=".admin.admin_capnhat"
+            android:name=".admin.AdminUpdate"
             android:exported="false"/>
         <activity
             android:name=".form_dang_ky"
             android:exported="false" />
         <activity
-            android:name=".admin.admin_listngdung"
-            android:parentActivityName=".admin.menu_admin"/>
+            android:name=".admin.AdminListUser"
+            android:parentActivityName=".admin.AdminMenu"/>
         <activity
-            android:name=".admin.admin_taongdung"
-            android:parentActivityName=".admin.menu_admin"/>
+            android:name=".admin.AdminCreateUser"
+            android:parentActivityName=".admin.AdminMenu"/>
         <activity
-            android:name=".choose_roles"
+            android:name=".ChooseRoles"
             android:exported="false"/>
         <activity
-            android:name=".admin.menu_admin"
-            android:parentActivityName=".admin.login_admin"
+            android:name=".admin.AdminMenu"
+            android:parentActivityName=".admin.AdminLogin"
             android:exported="false"/>
         <activity
-            android:name=".interface_nguoidung"
+            android:name=".UserInterface"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

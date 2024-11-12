@@ -1,57 +1,57 @@
-package com.example.jpyou.admin;
+package com.example.jpyou;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.jpyou.R;
+public class ChooseRoles extends AppCompatActivity {
 
-public class menu_admin extends AppCompatActivity {
-
-    private Button btn_taoNgDung, btn_listNgDung, btn_listNhVien;
+    private ImageButton btn_Staff;
+    private ImageButton btn_Patient;
+    private int buttonID_role_ChooseRoles;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.menu_admin);
+        setContentView(R.layout.choose_roles);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        btn_taoNgDung = findViewById(R.id.btn_taoNgDung);
-        btn_listNgDung = findViewById(R.id.btn_listNgDung);
-        btn_listNhVien = findViewById(R.id.btn_listNhanVien);
 
-        btn_taoNgDung.setOnClickListener(new View.OnClickListener() {
+
+
+        btn_Staff = findViewById(R.id.btnRole_Staff);
+        btn_Patient = findViewById(R.id.btnRole_Patient);
+        Intent intent = new Intent(ChooseRoles.this, UserLogin.class);
+
+
+        btn_Staff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(menu_admin.this, admin_taongdung.class);
+                buttonID_role_ChooseRoles = R.id.btnRole_Staff;
+                intent.putExtra("role", buttonID_role_ChooseRoles);
                 startActivity(intent);
             }
         });
 
-        btn_listNgDung.setOnClickListener(new View.OnClickListener() {
+        btn_Patient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(menu_admin.this, admin_listngdung.class);
+                buttonID_role_ChooseRoles = R.id.btnRole_Patient;
+                intent.putExtra("role", buttonID_role_ChooseRoles);
                 startActivity(intent);
             }
         });
-
-
-
-
     }
-
 }
