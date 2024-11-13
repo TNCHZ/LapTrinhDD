@@ -13,35 +13,38 @@
         android:theme="@style/Theme.Jpyou"
         tools:targetApi="31">
         <activity
-            android:name=".UserLogin"
+            android:name=".Doctor.DoctorInterface"
+            android:exported="false" />
+        <activity
+            android:name=".Login"
             android:exported="false" />
         <activity
             android:name=".ngaykhambenh_lichsukham"
             android:exported="false" />
         <activity
-            android:name=".admin.AdminLogin"
+            android:name=".Admin.AdminLogin"
             android:exported="false" />
         <activity
-            android:name=".admin.AdminUpdate"
-            android:exported="false"/>
+            android:name=".Admin.AdminUpdate"
+            android:exported="false" />
         <activity
             android:name=".form_dang_ky"
             android:exported="false" />
         <activity
-            android:name=".admin.AdminListUser"
-            android:parentActivityName=".admin.AdminMenu"/>
+            android:name=".Admin.AdminListUser"
+            android:parentActivityName=".Admin.AdminMenu" />
         <activity
-            android:name=".admin.AdminCreateUser"
-            android:parentActivityName=".admin.AdminMenu"/>
+            android:name=".Admin.AdminCreateUser"
+            android:parentActivityName=".Admin.AdminMenu" />
+        <activity
+            android:name=".User.UserInterface"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.AdminMenu"
+            android:exported="false"
+            android:parentActivityName=".Admin.AdminLogin" />
         <activity
             android:name=".ChooseRoles"
-            android:exported="false"/>
-        <activity
-            android:name=".admin.AdminMenu"
-            android:parentActivityName=".admin.AdminLogin"
-            android:exported="false"/>
-        <activity
-            android:name=".UserInterface"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

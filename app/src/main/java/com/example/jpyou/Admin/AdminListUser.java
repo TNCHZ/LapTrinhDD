@@ -1,4 +1,4 @@
-package com.example.jpyou.admin;
+package com.example.jpyou.Admin;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -30,7 +30,7 @@ public class AdminListUser extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.list_user_admin);
+        setContentView(R.layout.admin_list_user);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);

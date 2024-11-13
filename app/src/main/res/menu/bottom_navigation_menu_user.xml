@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_home"
-        android:icon="@drawable/icon_avatar"
+        android:icon="@drawable/ic_home"
         android:title="Trang Chủ" />
     <item
         android:id="@+id/nav_history"
-        android:icon="@drawable/icon_avatar"
+        android:icon="@drawable/ic_add"
         android:title="Thông tin khám bệnh" />
     <item
         android:id="@+id/nav_profile"
-        android:icon="@drawable/icon_avatar"
+        android:icon="@drawable/ic_person"
         android:title="Tài Khoản" />
 </menu>

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_marginTop="50dp"
-    tools:context=".admin.AdminLogin">
+    tools:context=".Admin.AdminLogin">
 
     <ImageView
         android:id="@+id/imageLogo"

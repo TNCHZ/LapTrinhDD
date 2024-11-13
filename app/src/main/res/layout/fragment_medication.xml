@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserFragment.HistoryFragment">
+    tools:context=".DoctorFragments.MedicationFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
@@ -11,16 +11,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
+        <SearchView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Lịch sử khám bệnh"
-            android:textAlignment="center"
-            android:textSize="24sp" />
+            android:layout_height="wrap_content" />
 
         <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
     </LinearLayout>
 
 </FrameLayout>

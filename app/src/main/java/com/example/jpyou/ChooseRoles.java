@@ -33,7 +33,7 @@ public class ChooseRoles extends AppCompatActivity {
 
         btn_Staff = findViewById(R.id.btnRole_Staff);
         btn_Patient = findViewById(R.id.btnRole_Patient);
-        Intent intent = new Intent(ChooseRoles.this, UserLogin.class);
+        Intent intent = new Intent(ChooseRoles.this, Login.class);
 
 
         btn_Staff.setOnClickListener(new View.OnClickListener() {

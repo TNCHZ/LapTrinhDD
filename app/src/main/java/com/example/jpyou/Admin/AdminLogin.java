@@ -1,4 +1,4 @@
-package com.example.jpyou.admin;
+package com.example.jpyou.Admin;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,7 +29,7 @@ public class AdminLogin extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.login_admin);
+        setContentView(R.layout.admin_login);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);

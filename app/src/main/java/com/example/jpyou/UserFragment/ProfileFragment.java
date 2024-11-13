@@ -1,4 +1,4 @@
-package com.example.jpyou.flagment;
+package com.example.jpyou.UserFragment;
 
 import android.os.Bundle;
 

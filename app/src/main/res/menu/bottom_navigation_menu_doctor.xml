@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_schedule"
+        android:icon="@drawable/ic_schedule"
+        android:title="Lịch Khám" />
+    <item
+        android:id="@+id/nav_examine"
+        android:icon="@drawable/ic_home"
+        android:title="Khám Bệnh" />
+    <item
+        android:id="@+id/nav_medication"
+        android:icon="@drawable/ic_list"
+        android:title="Danh sách thuốc" />
+</menu>

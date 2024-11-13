@@ -36,7 +36,7 @@ public class form_dang_ky extends AppCompatActivity {
         btnDangKy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(form_dang_ky.this, UserLogin.class);
+                Intent intent = new Intent(form_dang_ky.this, Login.class);
                 startActivity(intent);
             }
         });
