@@ -26,13 +26,19 @@
         android:id="@+id/btn_listNgDung"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Danh sách người dùng" />
+        android:text="Danh sách người đăng ký" />
 
     <Button
         android:id="@+id/btn_listNhanVien"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Danh sách nhân viên" />
+
+    <Button
+        android:id="@+id/btn_listNgKhongHoatDong"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Danh sách người dùng không hoạt động" />
 
     <Button
         android:id="@+id/btn_thongKe"

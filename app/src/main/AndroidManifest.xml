@@ -44,7 +44,6 @@
             android:exported="false" />
         <activity
             android:name=".Admin.AdminMenu"
-            android:exported="false"
             android:parentActivityName=".Admin.AdminLogin" />
         <activity
             android:name=".ChooseRoles"

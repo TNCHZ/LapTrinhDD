@@ -1,4 +1,5 @@
 package com.example.jpyou;
+
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,6 +9,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+
+import com.example.jpyou.User.userinform;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,7 +24,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
 
 
-
     public MyDatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
@@ -29,53 +31,66 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // Tạo bảng ThongTinNguoiDung
-        String createThongTinNguoiDungTable = "CREATE TABLE ThongTinNguoiDung (" +
-                "nguoidungID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "TenNguoiDung TEXT NOT NULL, " +
-                "gioiTinh TEXT, " +
-                "ngaySinh TEXT, " +
-                "diaChi TEXT, " +
-                "email TEXT UNIQUE, " +
-                "soDT TEXT UNIQUE, " +
-                "CCCD TEXT UNIQUE);";
+        // Tạo bảng TaiKhoan
+        String createTaiKhoanTable = "CREATE TABLE TaiKhoan (" +
+                "TaiKhoanID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "TaiKhoan TEXT NOT NULL UNIQUE, " +
+                "MatKhau TEXT NOT NULL, " +
+                "NgayThamGia TEXT NOT NULL, " +
+                "HoatDong INTEGER NOT NULL);";
 
         // Tạo bảng NguoiDung
         String createNguoiDungTable = "CREATE TABLE NguoiDung (" +
-                "nguoidungID INTEGER PRIMARY KEY, " +
-                "username TEXT NOT NULL UNIQUE, " +
-                "password TEXT NOT NULL, " +
-                "active INTEGER NOT NULL, " +
-                "createdDay TEXT NOT NULL, " +
-                "chucVu TEXT, " +
-                "FOREIGN KEY(nguoidungID) REFERENCES ThongTinNguoiDung(nguoidungID));";
+                "TaiKhoanID INTEGER PRIMARY KEY, " +
+                "HoTen TEXT NOT NULL, " +
+                "GioiTinh TEXT, " +
+                "NamSinh TEXT, " +
+                "DiaChi TEXT, " +
+                "CCCD TEXT UNIQUE, " +
+                "SoDT TEXT UNIQUE, " +
+                "Email TEXT UNIQUE, " +
+                "VaiTro TEXT, " +
+                "FOREIGN KEY(TaiKhoanID) REFERENCES TaiKhoan(TaiKhoanID));";
 
+        // Tạo bảng Admin
+        String createAdminTable = "CREATE TABLE Admin (" +
+                "AdminID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "ChucNang TEXT NOT NULL, " +
+                "TaiKhoanID INTEGER, " +
+                "FOREIGN KEY(TaiKhoanID) REFERENCES TaiKhoan(TaiKhoanID));";
 
         // Tạo bảng BacSi
         String createBacSiTable = "CREATE TABLE BacSi (" +
-                "nguoidungID INTEGER PRIMARY KEY, " +
-                "chuyenKhoa TEXT NOT NULL, " +
-                "FOREIGN KEY(nguoidungID) REFERENCES NguoiDung(nguoidungID));";
+                "BacSiID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "ChuyenKhoa TEXT NOT NULL, " +
+                "TaiKhoanID INTEGER, " +
+                "FOREIGN KEY(TaiKhoanID) REFERENCES TaiKhoan(TaiKhoanID));";
 
-        String createYTaTable = "CREATE TABLE YTa (" +
-                "nguoidungID INTEGER PRIMARY KEY, " +
-                "chuyenKhoa TEXT NOT NULL, " +
-                "FOREIGN KEY(nguoidungID) REFERENCES NguoiDung(nguoidungID));";
+        // Tạo bảng YTa
+        String createYTaTable = "CREATE TABLE Yta (" +
+                "YtaID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "KhoaPhuTrach TEXT NOT NULL, " +
+                "TaiKhoanID INTEGER, " +
+                "FOREIGN KEY(TaiKhoanID) REFERENCES TaiKhoan(TaiKhoanID));";
 
+        // Tạo bảng BenhNhan
         String createBenhNhanTable = "CREATE TABLE BenhNhan (" +
-                "nguoidungID INTEGER PRIMARY KEY, " +
-                "FOREIGN KEY(nguoidungID) REFERENCES NguoiDung(nguoidungID));";
+                "BenhNhanID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "TaiKhoanID INTEGER, " +
+                "FOREIGN KEY(TaiKhoanID) REFERENCES TaiKhoan(TaiKhoanID));";
 
         // Tạo bảng LichHen
         String createLichHenTable = "CREATE TABLE LichHen (" +
                 "lichhenID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "bacsiID INTEGER, " +
                 "benhnhanID INTEGER, " +
+                "YtaID INTEGER, " +
                 "ngayGioKham TEXT NOT NULL, " +
                 "soThuTuKham INTEGER, " +
                 "tinhTrangHen TEXT, " +
-                "FOREIGN KEY(bacsiID) REFERENCES BacSi(nguoidungID), " +
-                "FOREIGN KEY(benhnhanID) REFERENCES BenhNhan(nguoidungID));";
+                "FOREIGN KEY(bacsiID) REFERENCES BacSi(BacSiID), " +
+                "FOREIGN KEY(benhnhanID) REFERENCES BenhNhan(BenhNhanID), " +
+                "FOREIGN KEY(YtaID) REFERENCES Yta(YtaID));";
 
         // Tạo bảng ketQuaChuanDoan
         String createKetQuaChuanDoanTable = "CREATE TABLE ketQuaChuanDoan (" +
@@ -83,48 +98,79 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 "tenKetQuaChuanDoan TEXT NOT NULL, " +
                 "trieuChung TEXT, " +
                 "ngayKeToa TEXT, " +
-                "lichhenID INTEGER, " +
-                "FOREIGN KEY(lichhenID) REFERENCES LichHen(lichhenID));";
+                "bacsiID INTEGER, " +
+                "benhnhanID INTEGER, " +
+                "FOREIGN KEY(bacsiID) REFERENCES BacSi(BacSiID), " +
+                "FOREIGN KEY(benhnhanID) REFERENCES BenhNhan(BenhNhanID));";
 
         // Tạo bảng Thuoc
         String createThuocTable = "CREATE TABLE Thuoc (" +
                 "thuocID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "tenThuoc TEXT NOT NULL, " +
-                "huongDanSuDung TEXT);";
+                "tenThuoc TEXT NOT NULL);";
 
         // Tạo bảng ToaThuoc
         String createToaThuocTable = "CREATE TABLE ToaThuoc (" +
                 "toathuocID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "thuocID INTEGER, " +
                 "ketquachuandoanID INTEGER, " +
-                "FOREIGN KEY(thuocID) REFERENCES Thuoc(thuocID), " +
                 "FOREIGN KEY(ketquachuandoanID) REFERENCES ketQuaChuanDoan(ketquachuandoanID));";
 
+        // Tạo bảng ToaThuoc_Thuoc
+        String createToaThuocThuocTable = "CREATE TABLE ToaThuoc_Thuoc (" +
+                "ThuocID INTEGER, " +
+                "ToaThuocID INTEGER, " +
+                "LieuDung TEXT, " +
+                "HuongDanSuDung TEXT, " +
+                "PRIMARY KEY(ThuocID, ToaThuocID), " +
+                "FOREIGN KEY(ThuocID) REFERENCES Thuoc(thuocID), " +
+                "FOREIGN KEY(ToaThuocID) REFERENCES ToaThuoc(toathuocID));";
+
         // Thực thi các lệnh tạo bảng
+        db.execSQL(createTaiKhoanTable);
+        db.execSQL(createNguoiDungTable);
+        db.execSQL(createAdminTable);
+        db.execSQL(createBacSiTable);
         db.execSQL(createYTaTable);
         db.execSQL(createBenhNhanTable);
-        db.execSQL(createThongTinNguoiDungTable);
-        db.execSQL(createNguoiDungTable);
-        db.execSQL(createBacSiTable);
         db.execSQL(createLichHenTable);
         db.execSQL(createKetQuaChuanDoanTable);
         db.execSQL(createThuocTable);
         db.execSQL(createToaThuocTable);
+        db.execSQL(createToaThuocThuocTable);
+
+        String insertTaiKhoan1 = "INSERT INTO TaiKhoan (TaiKhoan, MatKhau, NgayThamGia, HoatDong) VALUES ('admin_manager', 'admin123', '2024-11-14', 1);";
+        String insertTaiKhoan2 = "INSERT INTO TaiKhoan (TaiKhoan, MatKhau, NgayThamGia, HoatDong) VALUES ('admin_user', 'user123', '2024-11-14', 1);";
+
+        db.execSQL(insertTaiKhoan1);
+        db.execSQL(insertTaiKhoan2);
+
+        String insertNguoiDung1 = "INSERT INTO NguoiDung (TaiKhoanID, HoTen, VaiTro) VALUES ((SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = 'admin_manager'), 'Admin Manager', 'Admin');";
+        String insertNguoiDung2 = "INSERT INTO NguoiDung (TaiKhoanID, HoTen, VaiTro) VALUES ((SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = 'admin_user'), 'Admin User', 'Admin');";
+
+        db.execSQL(insertNguoiDung1);
+        db.execSQL(insertNguoiDung2);
+
+        String insertAdmin1 = "INSERT INTO Admin (ChucNang, TaiKhoanID) VALUES ('Quản lý đăng nhập', (SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = 'admin_manager'));";
+        String insertAdmin2 = "INSERT INTO Admin (ChucNang, TaiKhoanID) VALUES ('Xem thống kê', (SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = 'admin_user'));";
+
+        db.execSQL(insertAdmin1);
+        db.execSQL(insertAdmin2);
     }
 
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Xóa các bảng nếu chúng tồn tại
-        db.execSQL("DROP TABLE IF EXISTS YTa");
+        db.execSQL("DROP TABLE IF EXISTS ToaThuoc_Thuoc");
         db.execSQL("DROP TABLE IF EXISTS ToaThuoc");
         db.execSQL("DROP TABLE IF EXISTS Thuoc");
         db.execSQL("DROP TABLE IF EXISTS ketQuaChuanDoan");
         db.execSQL("DROP TABLE IF EXISTS LichHen");
         db.execSQL("DROP TABLE IF EXISTS BenhNhan");
+        db.execSQL("DROP TABLE IF EXISTS Yta");
         db.execSQL("DROP TABLE IF EXISTS BacSi");
+        db.execSQL("DROP TABLE IF EXISTS Admin");
         db.execSQL("DROP TABLE IF EXISTS NguoiDung");
-        db.execSQL("DROP TABLE IF EXISTS ThongTinNguoiDung");
+        db.execSQL("DROP TABLE IF EXISTS TaiKhoan");
 
         // Gọi lại onCreate để tạo lại các bảng với cấu trúc mới
         onCreate(db);
@@ -135,50 +181,60 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         try {
-            // Bước 1: Thêm người dùng vào bảng ThongTinNguoiDung
-            ContentValues thongTinValues = new ContentValues();
-            thongTinValues.put("TenNguoiDung", tenNguoiDung);
-            thongTinValues.put("gioiTinh", gioiTinh);
-            thongTinValues.put("ngaySinh", ngaySinh);
-            thongTinValues.put("diaChi", diaChi);
-            thongTinValues.put("email", email);
-            thongTinValues.put("soDT", soDT);
-            thongTinValues.put("CCCD", cccd);
-            long nguoiDungID = db.insert("ThongTinNguoiDung", null, thongTinValues);
-
-            // Kiểm tra xem việc chèn vào ThongTinNguoiDung có thành công không
-            if (nguoiDungID == -1) {
-                Toast.makeText(context, "Không thể thêm ThongTinNguoiDung", Toast.LENGTH_SHORT).show();
-                return; // Nếu không thành công thì dừng thực hiện thêm vào bảng NguoiDung
+            ContentValues taiKhoan = new ContentValues();
+            taiKhoan.put("TaiKhoan", soDT);
+            taiKhoan.put("MatKhau", "Abc123");
+            taiKhoan.put("NgayThamGia", getCurrentDate());
+            taiKhoan.put("HoatDong", 1);
+            long addTK = db.insert("TaiKhoan", null, taiKhoan);
+            if (addTK == -1) {
+                Toast.makeText(context, "Không thêm được tài khoản", Toast.LENGTH_SHORT).show();
+                return;
             }
 
-            // Bước 2: Thêm thông tin tài khoản người dùng vào bảng NguoiDung
-            ContentValues nguoiDungValues = new ContentValues();
-            nguoiDungValues.put("nguoidungID", nguoiDungID); // Sử dụng ID vừa tạo ở bước 1
-            nguoiDungValues.put("username", soDT);
-            nguoiDungValues.put("password", cccd); // Hàm hashPassword để mã hóa mật khẩu
-            nguoiDungValues.put("active", 1); // Đặt giá trị mặc định cho active
-            nguoiDungValues.put("createdDay", getCurrentDate()); // Hàm getCurrentDate để lấy ngày hiện tại
-            nguoiDungValues.put("chucVu", chucVu);
-            long result = db.insert("NguoiDung", null, nguoiDungValues);
+            // Bước 1: Thêm người dùng vào bảng NguoiDung
+            ContentValues NguoiDung = new ContentValues();
+            NguoiDung.put("TaiKhoanID", addTK);
+            NguoiDung.put("HoTen", tenNguoiDung);  // Updated column name
+            NguoiDung.put("GioiTinh", gioiTinh);
+            NguoiDung.put("NamSinh", ngaySinh);
+            NguoiDung.put("DiaChi", diaChi);
+            NguoiDung.put("CCCD", cccd);
+            NguoiDung.put("SoDT", soDT);
+            NguoiDung.put("Email", email);
+            NguoiDung.put("VaiTro", chucVu);
+            long addNguoiDung = db.insert("NguoiDung", null, NguoiDung);
 
-            ContentValues bacSiValues = new ContentValues();
-            bacSiValues.put("chuyenKhoa", chuyenKhoa);
-            long result2 = db.insert("BacSi", null, bacSiValues);
-
-            // Kiểm tra kết quả khi thêm vào bảng NguoiDung
-            if (result == -1 && result2 == -1) {
-                Toast.makeText(context, "Không thể thêm NguoiDung", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(context, "Thêm người dùng thành công", Toast.LENGTH_SHORT).show();
+            if (addNguoiDung == -1) {
+                Toast.makeText(context, "Không thêm được người dùng", Toast.LENGTH_SHORT).show();
             }
 
-
+            switch (chucVu) {
+                case "Bác sĩ": {
+                    ContentValues bacSi = new ContentValues();
+                    bacSi.put("ChuyenKhoa", chuyenKhoa);
+                    bacSi.put("TaiKhoanID", addTK);  // Use the same TaiKhoanID
+                    long addBacSi = db.insert("BacSi", null, bacSi);
+                    if (addBacSi == -1) {
+                        Toast.makeText(context, "Không thêm được bác sĩ", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                }
+                case "Y tá": {
+                    ContentValues yTa = new ContentValues();
+                    yTa.put("KhoaPhuTrach", chuyenKhoa);  // Use chuyenKhoa as KhoaPhuTrach for YTa
+                    yTa.put("TaiKhoanID", addTK);  // Use the same TaiKhoanID
+                    long addYTa = db.insert("Yta", null, yTa);
+                    if (addYTa == -1) {
+                        Toast.makeText(context, "Không thêm được y tá", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                }
+            }
+            Toast.makeText(context, "Thêm dữ liệu thành công", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-            // Xử lý lỗi nếu có
             Toast.makeText(context, "Lỗi khi thêm người dùng: " + e.getMessage(), Toast.LENGTH_LONG).show();
         } finally {
-            // Đảm bảo đóng cơ sở dữ liệu trong mọi trường hợp
             if (db != null && db.isOpen()) {
                 db.close();
             }
@@ -191,49 +247,75 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return sdf.format(new Date());
     }
 
-
     @SuppressLint("Range")
-    public boolean verifyPassword(String username, String plainPassword) {
+    public String verifyPassword(String username, String plainPassword, String vaiTro) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        // Query to retrieve the hashed password for the given username
-        String query = "SELECT password FROM NguoiDung WHERE username = ?";
+        // Truy vấn JOIN để lấy cả mật khẩu, vai trò và TaiKhoanID
+        String query = "SELECT TaiKhoan.MatKhau, TaiKhoan.TaiKhoanID, NguoiDung.VaiTro " +
+                "FROM TaiKhoan " +
+                "INNER JOIN NguoiDung ON TaiKhoan.TaiKhoanID = NguoiDung.TaiKhoanID " +
+                "WHERE TaiKhoan.TaiKhoan = ?";
+
         Cursor cursor = db.rawQuery(query, new String[]{username});
 
-        String storedHashedPassword = null;
+        String taiKhoanID = "-1";
         if (cursor.moveToFirst()) {
-            storedHashedPassword = cursor.getString(cursor.getColumnIndex("password"));
+            // Lấy mật khẩu, vai trò và TaiKhoanID từ kết quả truy vấn
+            String storedPassword = cursor.getString(cursor.getColumnIndex("MatKhau"));
+            String storedVaiTro = cursor.getString(cursor.getColumnIndex("VaiTro"));
+            String storedTaiKhoanID = cursor.getString(cursor.getColumnIndex("TaiKhoanID"));
+
+            // So sánh mật khẩu và vai trò
+            if (storedPassword != null && storedPassword.equals(plainPassword)) {
+                if (storedVaiTro != null && storedVaiTro.equals(vaiTro)) {
+                    // Đăng nhập thành công, gán TaiKhoanID cho biến kết quả
+                    taiKhoanID = storedTaiKhoanID;
+                }
+            }
         }
+
         cursor.close();
         db.close();
 
-        if (storedHashedPassword == null) {
-            // Username not found in the database
-            return false;
-        }
-
-        // Hash the input password and compare with the stored hash
-        return true;
+        return taiKhoanID;
     }
 
+    @SuppressLint("Range")
+    public String getTenChucNang(int taiKhoanID) {
+        SQLiteDatabase db = this.getReadableDatabase();
 
+        String query = "SELECT ChucNang FROM Admin WHERE TaiKhoanID = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(taiKhoanID)});
 
-    public List<String> getAllUser(String excludeRole) {
+        String tenChucNang = null;
+        if (cursor.moveToFirst()) {
+            tenChucNang = cursor.getString(cursor.getColumnIndex("ChucNang"));
+        }
+
+        cursor.close();
+        db.close();
+
+        return tenChucNang; // Trả về TenChucNang nếu tìm thấy, nếu không trả về null
+    }
+
+    @SuppressLint("Range")
+    public List<String> dsNguoiDung(String vaitro) {
         List<String> users = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "SELECT ThongTinNguoiDung.nguoidungID, ThongTinNguoiDung.TenNguoiDung, NguoiDung.vaitro " +
-                "FROM ThongTinNguoiDung " +
-                "JOIN NguoiDung ON ThongTinNguoiDung.nguoidungID = NguoiDung.nguoidungID " +
-                "WHERE NguoiDung.vaitro != ?";
-
-        Cursor cursor = db.rawQuery(query, new String[]{excludeRole});
+        String query = "SELECT NguoiDung.TaiKhoanID, NguoiDung.HoTen, NguoiDung.SoDT, TaiKhoan.HoatDong " +
+                "FROM NguoiDung " +
+                "JOIN TaiKhoan ON NguoiDung.TaiKhoanID = TaiKhoan.TaiKhoanID " +
+                "WHERE NguoiDung.VaiTro = ? AND TaiKhoan.HoatDong = 1";
+        Cursor cursor = db.rawQuery(query, new String[]{vaitro});
 
         if (cursor.moveToFirst()) {
             do {
-                @SuppressLint("Range") String userId = cursor.getString(cursor.getColumnIndex("nguoidungID"));
-                @SuppressLint("Range") String userName = cursor.getString(cursor.getColumnIndex("TenNguoiDung"));
-                users.add(userId + " " + userName);
+                String taiKhoanID = cursor.getString(cursor.getColumnIndex("TaiKhoanID"));
+                String hoTen = cursor.getString(cursor.getColumnIndex("HoTen"));
+                String soDT = cursor.getString(cursor.getColumnIndex("SoDT"));
+                users.add(taiKhoanID + " " + hoTen + " " + soDT);
             } while (cursor.moveToNext());
         }
 
@@ -243,5 +325,69 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return users;
     }
 
+    @SuppressLint("Range")
+    public List<String> dsNguoiDung() {
+        List<String> users = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String vaitro = "Bệnh nhân";
 
+        String query = "SELECT NguoiDung.TaiKhoanID, NguoiDung.HoTen, NguoiDung.SoDT, TaiKhoan.HoatDong " +
+                "FROM NguoiDung " +
+                "JOIN TaiKhoan ON NguoiDung.TaiKhoanID = TaiKhoan.TaiKhoanID " +
+                "WHERE NguoiDung.VaiTro != ? AND TaiKhoan.HoatDong = 1";
+        Cursor cursor = db.rawQuery(query, new String[]{vaitro});
+
+        if (cursor.moveToFirst()) {
+            do {
+                String taiKhoanID = cursor.getString(cursor.getColumnIndex("TaiKhoanID"));
+                String hoTen = cursor.getString(cursor.getColumnIndex("HoTen"));
+                String soDT = cursor.getString(cursor.getColumnIndex("SoDT"));
+                users.add(taiKhoanID + " " + hoTen + " " + soDT);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return users;
+    }
+
+    public void HoatDong(int taikhoanID, int hoatDong) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // Cập nhật giá trị HoatDong thành 0 cho tài khoản có TaiKhoanID tương ứng
+        String query = "UPDATE TaiKhoan SET HoatDong = ? WHERE TaiKhoanID = ?";
+
+        // Thực thi câu lệnh cập nhật
+        db.execSQL(query, new Object[]{hoatDong, taikhoanID});
+
+        // Đóng cơ sở dữ liệu sau khi thực hiện thao tác
+        db.close();
+    }
+
+    @SuppressLint("Range")
+    public List<String> dsNguoiKhongHD() {
+        List<String> users = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT NguoiDung.TaiKhoanID, NguoiDung.HoTen, NguoiDung.VaiTro, TaiKhoan.HoatDong " +
+                "FROM NguoiDung " +
+                "JOIN TaiKhoan ON NguoiDung.TaiKhoanID = TaiKhoan.TaiKhoanID " +
+                "WHERE TaiKhoan.HoatDong = 0";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                String taiKhoanID = cursor.getString(cursor.getColumnIndex("TaiKhoanID"));
+                String hoTen = cursor.getString(cursor.getColumnIndex("HoTen"));
+                String vaiTro = cursor.getString(cursor.getColumnIndex("VaiTro"));
+                users.add(taiKhoanID + " " + hoTen + " " + vaiTro);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return users;
+    }
 }

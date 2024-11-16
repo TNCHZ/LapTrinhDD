@@ -17,6 +17,7 @@ public class ChooseRoles extends AppCompatActivity {
     private ImageButton btn_Patient;
     private int buttonID_role_ChooseRoles;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,9 +28,6 @@ public class ChooseRoles extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-
-
 
         btn_Staff = findViewById(R.id.btnRole_Staff);
         btn_Patient = findViewById(R.id.btnRole_Patient);

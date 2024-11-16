@@ -22,13 +22,15 @@ import com.example.jpyou.R;
 
 public class AdminCreateUser extends AppCompatActivity {
 
-    private TextView txtName, txtNamSinh, txtDiaChi, txtCCCD, txtSDT, txtEmail, txtChuyenKhoa;
+    private TextView txtName, txtNamSinh, txtDiaChi, txtCCCD, txtSDT, txtEmail;
     private RadioButton rdNam;
     private String gioiTinh;
     private Button bt;
-    private Spinner sp;
-    private String chucVu;
-    private String[] roles = {"Bác sĩ", "Y tá"};
+    private Spinner sp_role, sp_chuyenKhoa;
+    private String chucVu, chuyenKhoa;
+    private String[] roles = {"Bác sĩ", "Y tá", "Admin"};
+    private String[] khoa = {"Tai, Mũi, Họng", "Mắt", "Răng hàm mặt", "Phụ Sản", "Cơ, Xương, Khớp"};
+    private String[] chucNangAdmin = {"Quản lý đăng nhập", "Xem thông kê"};
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -42,15 +44,11 @@ public class AdminCreateUser extends AppCompatActivity {
             return insets;
         });
 
-        sp = findViewById(R.id.spinner_role);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, roles);
-
-// Thiết lập layout khi mục được chọn
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-// Gán adapter cho Spinner
-        sp.setAdapter(adapter);
-        sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        sp_role = findViewById(R.id.spinner_role);
+        ArrayAdapter<String> adapter_role = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, roles);
+        adapter_role.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sp_role.setAdapter(adapter_role);
+        sp_role.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 chucVu = parent.getItemAtPosition(position).toString();
@@ -60,6 +58,39 @@ public class AdminCreateUser extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+        switch (chucVu) {
+            case "Admin":
+                sp_chuyenKhoa = findViewById(R.id.spinner_chuyenKhoa);
+                ArrayAdapter<String> adapter_admin = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, chucNangAdmin);
+                adapter_admin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                sp_chuyenKhoa.setAdapter(adapter_admin);
+                sp_chuyenKhoa.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        chuyenKhoa = parent.getItemAtPosition(position).toString();
+                    }
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                    }
+                });
+                break;
+            default: {
+                sp_chuyenKhoa = findViewById(R.id.spinner_chuyenKhoa);
+                ArrayAdapter<String> adapter_chuyenKhoa = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, khoa);
+                adapter_chuyenKhoa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                sp_chuyenKhoa.setAdapter(adapter_chuyenKhoa);
+                sp_chuyenKhoa.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        chuyenKhoa = parent.getItemAtPosition(position).toString();
+                    }
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                    }
+                });
+            }
+            break;
+        }
 
         txtName = findViewById(R.id.txtName);
         txtNamSinh = findViewById(R.id.txtNamSinh);
@@ -67,7 +98,6 @@ public class AdminCreateUser extends AppCompatActivity {
         txtCCCD = findViewById(R.id.txtCCCD);
         txtSDT = findViewById(R.id.txtSDT);
         txtEmail = findViewById(R.id.txtEmail);
-        txtChuyenKhoa = findViewById(R.id.txtChuyenKhoa);
         rdNam = findViewById(R.id.rdNam);
         bt = findViewById(R.id.btn_dangKiAdmin);
 
@@ -85,7 +115,6 @@ public class AdminCreateUser extends AppCompatActivity {
                 String cccd = txtCCCD.getText().toString();
                 String sdt = txtSDT.getText().toString();
                 String email = txtEmail.getText().toString();
-                String chuyenKhoa = txtChuyenKhoa.getText().toString();
 
 
                 mydb.addNguoiDung(
