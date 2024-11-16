@@ -1,112 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:layout_marginTop="50dp"
     tools:context=".Login">
 
     <ImageView
-        android:id="@+id/imageLogo"
-        android:layout_width="155dp"
-        android:layout_height="150dp"
-        android:layout_gravity="center"
-        android:layout_marginBottom="20dp"
-        app:srcCompat="@drawable/jpyou" />
-
-    <TextView
-        android:id="@+id/textView"
+        android:id="@+id/imageView3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="THÔNG TIN ĐĂNG NHẬP"
-        android:textAlignment="center"
-        android:layout_marginBottom="20dp"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/btnRole"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/custome_edit_text"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:backgroundTint="@null" />
-
-    <TextView
-        android:id="@+id/txtCanhBao_User"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textColor="#F20303" />
-
-    <EditText
-        android:id="@+id/txtTaiKhoan_User"
-        android:background="@drawable/custome_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:ems="10"
-        android:hint="Số điện thoại"
-        android:inputType="phone" />
-
-    <EditText
-        android:id="@+id/txtMatKhau_User"
-        android:background="@drawable/custome_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:layout_margin="10dp"
-        android:hint="Nhập mật khẩu"
-        android:inputType="textPassword"
-        tools:layout_editor_absoluteX="100dp"
-        tools:layout_editor_absoluteY="45dp" />
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/backgorund" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <CheckBox
-            android:id="@+id/checkPassword_User"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/imageLogo"
+            android:layout_width="155dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:background="#00000000"
+            app:srcCompat="@drawable/jpyou" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hiển thị mật khẩu" />
+            android:layout_marginBottom="20dp"
+            android:text="THÔNG TIN ĐĂNG NHẬP"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <Button
-            android:id="@+id/btnQuenMatKhau_User"
+            android:id="@+id/btnRole"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custome_edit_text"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:backgroundTint="@null" />
+
+        <TextView
+            android:id="@+id/txtCanhBao_User"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="#F20303" />
+
+        <EditText
+            android:id="@+id/txtTaiKhoan_User"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/custome_edit_text"
+            android:ems="10"
+            android:hint="Số điện thoại"
+            android:inputType="phone" />
+
+        <EditText
+            android:id="@+id/txtMatKhau_User"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/custome_edit_text"
+            android:ems="10"
+            android:hint="Nhập mật khẩu"
+            android:inputType="textPassword"
+            tools:layout_editor_absoluteX="100dp"
+            tools:layout_editor_absoluteY="45dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/checkPassword_User"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/divider_horizontal_dark"
+                android:text="Hiển thị mật khẩu"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/black" />
+
+            <Button
+                android:id="@+id/btnQuenMatKhau_User"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:drawable/divider_horizontal_dark"
+                android:text="Quên mật khẩu ?"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:backgroundTint="@null" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnLogin_User"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Quên mật khẩu ?"
-            android:textAlignment="viewEnd"
-            android:background="@color/white"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/custom_button"
+            android:text="Đăng nhập"
+            app:backgroundTint="@null" />
+
+        <Button
+            android:id="@+id/btnDangKy_User"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="#00000000"
+            android:text="Tạo tài khoản mới ?"
             android:textColor="@color/black"
             app:backgroundTint="@null" />
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnLogin_User"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/custom_button"
-        android:text="Đăng nhập"
-        android:layout_gravity="center"
-        app:backgroundTint="@null" />
-
-    <Button
-        android:id="@+id/btnDangKy_User"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Tạo tài khoản mới ?"
-        android:background="@color/white"
-        android:textColor="@color/black"
-        app:backgroundTint="@null" />
-
-</LinearLayout>
+</FrameLayout>

@@ -3,15 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/role_patient"
-        android:title="Bệnh nhân"
-        app:showAsAction="ifRoom" />
+        android:id="@+id/role_nurse"
+        android:title="Y tá"/>
     <item
-        android:id="@+id/role_staff"
-        android:title="Nhân viên"
-        app:showAsAction="ifRoom" />
+        android:id="@+id/role_doctor"
+        android:title="Bác sĩ"/>
     <item
         android:id="@+id/role_admin"
-        android:title="Admin"
-        app:showAsAction="ifRoom" />
+        android:title="Admin"/>
 </menu>

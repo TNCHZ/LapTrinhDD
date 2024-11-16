@@ -33,23 +33,30 @@ public class Login extends AppCompatActivity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        getMenuInflater().inflate(R.menu.context_menu_role, menu);
+        btnRole = findViewById(R.id.btnRole);
+        if (btnRole.getText() != "Bệnh nhân") {
+            getMenuInflater().inflate(R.menu.context_menu_role, menu);
+            menu.setHeaderTitle("Chọn chức vụ");
+            menu.setHeaderIcon(R.drawable.ic_person);
+        }
     }
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         btnRole = findViewById(R.id.btnRole);
-        if (item.getItemId() == R.id.role_staff) {
-            btnRole.setText("Nhân viên");
-            Toast.makeText(this, "Nhân viên", Toast.LENGTH_SHORT).show();
-        } else if (item.getItemId() == R.id.role_patient) {
-            btnRole.setText("Bệnh nhân");
-            Toast.makeText(this, "Bệnh nhân", Toast.LENGTH_SHORT).show();
-        } else if (item.getItemId() == R.id.role_admin) {
-            btnRole.setText("Admin");
-            Toast.makeText(this, "Admin", Toast.LENGTH_SHORT).show();
-            Intent intent_AdminLogin = new Intent(Login.this, AdminLogin.class);
-            startActivity(intent_AdminLogin);
+        if (btnRole.getText() != "Bệnh nhân") {
+            if (item.getItemId() == R.id.role_doctor) {
+                btnRole.setText("Bác sĩ");
+                Toast.makeText(this, "Bác sĩ", Toast.LENGTH_SHORT).show();
+            } else if (item.getItemId() == R.id.role_nurse) {
+                btnRole.setText("Y tá");
+                Toast.makeText(this, "Y tá", Toast.LENGTH_SHORT).show();
+            } else if (item.getItemId() == R.id.role_admin) {
+                btnRole.setText("Admin");
+                Toast.makeText(this, "Admin", Toast.LENGTH_SHORT).show();
+                Intent intent_AdminLogin = new Intent(Login.this, AdminLogin.class);
+                startActivity(intent_AdminLogin);
+            }
         }
         return super.onContextItemSelected(item);
     }
@@ -65,13 +72,13 @@ public class Login extends AppCompatActivity {
             return insets;
         });
 
-
         //thiết lập button lấy menu
         btnRole = findViewById(R.id.btnRole);
         registerForContextMenu(btnRole);
 
         //thiết lập role
         role();
+
 
         //Ẩn/Hiện Password
         txtPass = findViewById(R.id.txtMatKhau_User);//lấy id EditText Password
@@ -87,11 +94,11 @@ public class Login extends AppCompatActivity {
     private void role() {
         Intent give = getIntent();
         int buttonID_role_User = give.getIntExtra("role", -1);
-
         int roleStaff = R.id.btnRole_Staff;
         int rolePatient = R.id.btnRole_Patient;
+
         if (buttonID_role_User == roleStaff) {
-            btnRole.setText("Nhân viên");
+            btnRole.setText("Bác sĩ");
             btnDangKy = findViewById(R.id.btnDangKy_User);
             btnDangKy.setVisibility(View.GONE);
         }
@@ -130,13 +137,32 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 btnRole = findViewById(R.id.btnRole);
-                if (btnRole.getText().toString() == "Bệnh nhân") {
-                    Intent intent_user = new Intent(Login.this, UserInterface.class);
-                    startActivity(intent_user);
-                } else if (btnRole.getText().toString() == "Nhân viên") {
-                    Intent intent_doctor = new Intent(Login.this, DoctorInterface.class);
-                    startActivity(intent_doctor);
+                String text = btnRole.getText().toString();
+                switch (text){
+//                    case "Bệnh nhân":
+//                        Intent intent_user = new Intent(Login.this, UserInterface.class);
+//                        startActivity(intent_user);
+//                        break;
+                    case "Bác sĩ":
+                        Intent intent_doctor = new Intent(Login.this, DoctorInterface.class);
+                        startActivity(intent_doctor);
+                        break;
+                    case "Y tá":
+                        Intent intent_nurse = new Intent(Login.this, UserInterface.class);
+                        startActivity(intent_nurse);
+                        break;
+                    default:
+                        Intent intent_user = new Intent(Login.this, UserInterface.class);
+                        startActivity(intent_user);
+                        break;
                 }
+//                if (text == "Bệnh nhân") {
+//                    Intent intent_user = new Intent(Login.this, UserInterface.class);
+//                    startActivity(intent_user);
+//                } else if (text == "Bác sĩ") {
+//                    Intent intent_doctor = new Intent(Login.this, DoctorInterface.class);
+//                    startActivity(intent_doctor);
+//                }
             }
         });
     }
