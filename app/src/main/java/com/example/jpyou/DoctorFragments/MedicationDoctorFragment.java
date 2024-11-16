@@ -12,10 +12,10 @@ import com.example.jpyou.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MedicationFragment#newInstance} factory method to
+ * Use the {@link MedicationDoctorFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MedicationFragment extends Fragment {
+public class MedicationDoctorFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +26,7 @@ public class MedicationFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public MedicationFragment() {
+    public MedicationDoctorFragment() {
         // Required empty public constructor
     }
 
@@ -39,8 +39,8 @@ public class MedicationFragment extends Fragment {
      * @return A new instance of fragment MedicationFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MedicationFragment newInstance(String param1, String param2) {
-        MedicationFragment fragment = new MedicationFragment();
+    public static MedicationDoctorFragment newInstance(String param1, String param2) {
+        MedicationDoctorFragment fragment = new MedicationDoctorFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,6 +61,6 @@ public class MedicationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_medication, container, false);
+        return inflater.inflate(R.layout.fragment_doctor_medication, container, false);
     }
 }

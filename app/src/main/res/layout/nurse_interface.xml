@@ -5,22 +5,20 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".User.UserInterface">
+    tools:context=".Nurse.NurseInterface">
 
-    <!-- Bottom Navigation View -->
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPagerUser"
+        android:id="@+id/viewPagerNurse"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottomNavigationUser"/>
+        android:layout_above="@+id/bottomNavigationNurse" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationUser"
+        android:id="@+id/bottomNavigationNurse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="#03A9F4"
         app:itemIconTint="@color/custom_color_bottom_navigation"
-        app:menu="@menu/bottom_navigation_menu_user" />
-
+        app:menu="@menu/bottom_navigation_menu_nurse"/>
 </RelativeLayout>

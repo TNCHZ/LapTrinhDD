@@ -1,4 +1,4 @@
-package com.example.jpyou.UserFragment;
+package com.example.jpyou.UserFragments;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -15,13 +15,13 @@ public class ViewPagerAdapterUser extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position){
             case 0:
-                return new HomeFragment();
+                return new HomeUserFragment();
             case 1:
-                return new HistoryFragment();
+                return new ScheduleUserFragment();
             case 2:
-                return new ProfileFragment();
+                return new ProfileUserFragment();
             default:
-                return new HomeFragment();
+                return new HomeUserFragment();
         }
     }
 

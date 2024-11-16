@@ -21,6 +21,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.jpyou.Admin.AdminLogin;
 import com.example.jpyou.Doctor.DoctorInterface;
+import com.example.jpyou.Nurse.NurseInterface;
 import com.example.jpyou.User.UserInterface;
 
 public class Login extends AppCompatActivity {
@@ -148,7 +149,7 @@ public class Login extends AppCompatActivity {
                         startActivity(intent_doctor);
                         break;
                     case "Y tá":
-                        Intent intent_nurse = new Intent(Login.this, UserInterface.class);
+                        Intent intent_nurse = new Intent(Login.this, NurseInterface.class);
                         startActivity(intent_nurse);
                         break;
                     default:
@@ -156,13 +157,6 @@ public class Login extends AppCompatActivity {
                         startActivity(intent_user);
                         break;
                 }
-//                if (text == "Bệnh nhân") {
-//                    Intent intent_user = new Intent(Login.this, UserInterface.class);
-//                    startActivity(intent_user);
-//                } else if (text == "Bác sĩ") {
-//                    Intent intent_doctor = new Intent(Login.this, DoctorInterface.class);
-//                    startActivity(intent_doctor);
-//                }
             }
         });
     }

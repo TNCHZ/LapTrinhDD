@@ -3,37 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".UserFragment.HistoryFragment">
+    tools:context=".DoctorFragments.ScheduleDoctorFragment">
 
     <!-- TODO: Update blank fragment layout -->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/textView8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Lịch sử khám bệnh"
+            android:text="Lịch Khám Bệnh"
             android:textAlignment="center"
             android:textSize="24sp" />
 
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </ListView>
+            android:layout_height="match_parent" />
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/btnAdd"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="350dp"
-        android:layout_marginTop="650dp"
-        android:background="@drawable/ic_add" />
 
 </FrameLayout>

@@ -1,4 +1,4 @@
-package com.example.jpyou.UserFragment;
+package com.example.jpyou.UserFragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.jpyou.R;
 
-public class HomeFragment extends Fragment {
+public class HomeUserFragment extends Fragment {
 
-    public HomeFragment() {
+    public HomeUserFragment() {
         // Required empty public constructor
     }
 
@@ -19,7 +19,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the fragment's layout
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_user_home, container, false);
 
         // Lấy các Button từ layout của Fragment
         Button button1 = view.findViewById(R.id.button);
