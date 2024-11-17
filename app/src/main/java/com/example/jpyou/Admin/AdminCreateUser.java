@@ -28,9 +28,9 @@ public class AdminCreateUser extends AppCompatActivity {
     private Button bt;
     private Spinner sp_role, sp_chuyenKhoa;
     private String chucVu, chuyenKhoa;
-    private String[] roles = {"Bác sĩ", "Y tá", "Admin"};
+    private String[] roles = {"Bác sĩ", "Y tá"};
     private String[] khoa = {"Tai, Mũi, Họng", "Mắt", "Răng hàm mặt", "Phụ Sản", "Cơ, Xương, Khớp"};
-    private String[] chucNangAdmin = {"Quản lý đăng nhập", "Xem thông kê"};
+    private ArrayAdapter<String> adapter_admin;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -58,39 +58,22 @@ public class AdminCreateUser extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-        switch (chucVu) {
-            case "Admin":
-                sp_chuyenKhoa = findViewById(R.id.spinner_chuyenKhoa);
-                ArrayAdapter<String> adapter_admin = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, chucNangAdmin);
-                adapter_admin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                sp_chuyenKhoa.setAdapter(adapter_admin);
-                sp_chuyenKhoa.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        chuyenKhoa = parent.getItemAtPosition(position).toString();
-                    }
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                    }
-                });
-                break;
-            default: {
-                sp_chuyenKhoa = findViewById(R.id.spinner_chuyenKhoa);
-                ArrayAdapter<String> adapter_chuyenKhoa = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, khoa);
-                adapter_chuyenKhoa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                sp_chuyenKhoa.setAdapter(adapter_chuyenKhoa);
-                sp_chuyenKhoa.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        chuyenKhoa = parent.getItemAtPosition(position).toString();
-                    }
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                    }
-                });
+
+        sp_chuyenKhoa = findViewById(R.id.spinner_chuyenKhoa);
+        adapter_admin = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, khoa);
+
+        adapter_admin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sp_chuyenKhoa.setAdapter(adapter_admin);
+        sp_chuyenKhoa.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                chuyenKhoa = parent.getItemAtPosition(position).toString();
             }
-            break;
-        }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
 
         txtName = findViewById(R.id.txtName);
         txtNamSinh = findViewById(R.id.txtNamSinh);
@@ -118,6 +101,8 @@ public class AdminCreateUser extends AppCompatActivity {
 
 
                 mydb.addNguoiDung(
+                        sdt,
+                        cccd,
                         name,
                         gioiTinh,
                         namSinh,

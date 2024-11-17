@@ -7,7 +7,7 @@
 
     <!-- Button for different actions -->
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_datKham"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Đặt khám bác sĩ" />

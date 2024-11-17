@@ -10,13 +10,8 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.example.jpyou.User.userinform;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class MyDatabaseHelper extends SQLiteOpenHelper {
     private Context context;
@@ -85,9 +80,10 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 "bacsiID INTEGER, " +
                 "benhnhanID INTEGER, " +
                 "YtaID INTEGER, " +
-                "ngayGioKham TEXT NOT NULL, " +
+                "ngayKham TEXT NOT NULL, " +
+                "gioKham TEXT NOT NULL," +
                 "soThuTuKham INTEGER, " +
-                "tinhTrangHen TEXT, " +
+                "tinhTrangHen INTERGER, " +
                 "FOREIGN KEY(bacsiID) REFERENCES BacSi(BacSiID), " +
                 "FOREIGN KEY(benhnhanID) REFERENCES BenhNhan(BenhNhanID), " +
                 "FOREIGN KEY(YtaID) REFERENCES Yta(YtaID));";
@@ -137,23 +133,23 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(createToaThuocTable);
         db.execSQL(createToaThuocThuocTable);
 
-        String insertTaiKhoan1 = "INSERT INTO TaiKhoan (TaiKhoan, MatKhau, NgayThamGia, HoatDong) VALUES ('admin_manager', 'admin123', '2024-11-14', 1);";
-        String insertTaiKhoan2 = "INSERT INTO TaiKhoan (TaiKhoan, MatKhau, NgayThamGia, HoatDong) VALUES ('admin_user', 'user123', '2024-11-14', 1);";
-
-        db.execSQL(insertTaiKhoan1);
-        db.execSQL(insertTaiKhoan2);
-
-        String insertNguoiDung1 = "INSERT INTO NguoiDung (TaiKhoanID, HoTen, VaiTro) VALUES ((SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = 'admin_manager'), 'Admin Manager', 'Admin');";
-        String insertNguoiDung2 = "INSERT INTO NguoiDung (TaiKhoanID, HoTen, VaiTro) VALUES ((SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = 'admin_user'), 'Admin User', 'Admin');";
-
-        db.execSQL(insertNguoiDung1);
-        db.execSQL(insertNguoiDung2);
-
-        String insertAdmin1 = "INSERT INTO Admin (ChucNang, TaiKhoanID) VALUES ('Quản lý đăng nhập', (SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = 'admin_manager'));";
-        String insertAdmin2 = "INSERT INTO Admin (ChucNang, TaiKhoanID) VALUES ('Xem thống kê', (SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = 'admin_user'));";
-
-        db.execSQL(insertAdmin1);
-        db.execSQL(insertAdmin2);
+//        String insertTaiKhoan1 = "INSERT INTO TaiKhoan (TaiKhoan, MatKhau, NgayThamGia, HoatDong) VALUES ('admin_user', 'user123', '2024-11-14', 1);";
+//        String insertTaiKhoan2 = "INSERT INTO TaiKhoan (TaiKhoan, MatKhau, NgayThamGia, HoatDong) VALUES ('admin_report', 'report123', '2024-11-14', 1);";
+//
+//        db.execSQL(insertTaiKhoan1);
+//        db.execSQL(insertTaiKhoan2);
+//
+//        String insertNguoiDung1 = "INSERT INTO NguoiDung (TaiKhoanID, HoTen, VaiTro) VALUES ((SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = 'admin_user'), 'Admin User', 'Admin');";
+//        String insertNguoiDung2 = "INSERT INTO NguoiDung (TaiKhoanID, HoTen, VaiTro) VALUES ((SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = 'admin_report'), 'Admin Report', 'Admin');";
+//
+//        db.execSQL(insertNguoiDung1);
+//        db.execSQL(insertNguoiDung2);
+//
+//        String insertAdmin1 = "INSERT INTO Admin (ChucNang, TaiKhoanID) VALUES ('Quản lý đăng nhập', (SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = 'admin_user'));";
+//        String insertAdmin2 = "INSERT INTO Admin (ChucNang, TaiKhoanID) VALUES ('Xem thống kê', (SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = 'admin_report'));";
+//
+//        db.execSQL(insertAdmin1);
+//        db.execSQL(insertAdmin2);
     }
 
 
@@ -177,14 +173,14 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public void addNguoiDung(String tenNguoiDung, String gioiTinh, String ngaySinh, String diaChi, String email, String soDT, String cccd, String chuyenKhoa, String chucVu) {
+    public void addNguoiDung(String username, String password, String tenNguoiDung, String gioiTinh, String ngaySinh, String diaChi, String email, String soDT, String cccd, String chuyenKhoa, String chucVu) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         try {
             ContentValues taiKhoan = new ContentValues();
-            taiKhoan.put("TaiKhoan", soDT);
-            taiKhoan.put("MatKhau", "Abc123");
-            taiKhoan.put("NgayThamGia", getCurrentDate());
+            taiKhoan.put("TaiKhoan", username);
+            taiKhoan.put("MatKhau", password);
+            taiKhoan.put("NgayThamGia", setting.getCurrentDate());
             taiKhoan.put("HoatDong", 1);
             long addTK = db.insert("TaiKhoan", null, taiKhoan);
             if (addTK == -1) {
@@ -230,6 +226,16 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                     }
                     break;
                 }
+                default: {
+                    ContentValues benhNhan = new ContentValues();
+                    benhNhan.put("TaiKhoanID", addTK);
+                    long addYTa = db.insert("BenhNhan", null, benhNhan);
+                    if (addYTa == -1) {
+                        Toast.makeText(context, "Không thêm được y tá", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                break;
+
             }
             Toast.makeText(context, "Thêm dữ liệu thành công", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
@@ -242,10 +248,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    private String getCurrentDate() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        return sdf.format(new Date());
-    }
+
 
     @SuppressLint("Range")
     public String verifyPassword(String username, String plainPassword, String vaiTro) {
@@ -389,5 +392,63 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.close();
 
         return users;
+    }
+
+    @SuppressLint("Range")
+    public String getTaiKhoanIDByPhoneNumber(int phoneNumber) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Truy vấn lấy TaiKhoanID dựa trên số điện thoại
+        String query = "SELECT TaiKhoan.TaiKhoanID " +
+                "FROM TaiKhoan " +
+                "INNER JOIN NguoiDung ON TaiKhoan.TaiKhoanID = NguoiDung.TaiKhoanID " +
+                "WHERE NguoiDung.SoDT = ?";
+
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(phoneNumber)});
+
+        String taiKhoanID = "-1";  // Mặc định trả về -1 nếu không tìm thấy
+        if (cursor.moveToFirst()) {
+            taiKhoanID = cursor.getString(cursor.getColumnIndex("TaiKhoanID"));
+        }
+
+        cursor.close();
+        db.close();
+
+        return taiKhoanID;
+    }
+
+    public void taoLichHen(int id, String ngayKham, String gioKham)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "INSERT INTO LichHen (benhnhanID, ngayKham, gioKham, tinhTrangHen) VALUES (?, ?, ?)";
+
+        db.execSQL(query, new Object[]{String.valueOf(id), ngayKham, gioKham, "0"});
+
+        // Đóng cơ sở dữ liệu sau khi thực hiện thao tác
+        db.close();
+    }
+
+    @SuppressLint("Range")
+    public String getBenhNhanID(int tkID) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Truy vấn lấy TaiKhoanID dựa trên số điện thoại
+        String query = "SELECT BenhNhan.BenhNhanID " +
+                "FROM BenhNhan " +
+                "INNER JOIN TaiKhoan ON TaiKhoan.TaiKhoanID = BenhNhan.TaiKhoanID " +
+                "WHERE TaiKhoanID = ?";
+
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(tkID)});
+
+        String bnID = "-1";  // Mặc định trả về -1 nếu không tìm thấy
+        if (cursor.moveToFirst()) {
+            bnID = cursor.getString(cursor.getColumnIndex("BenhNhanID"));
+        }
+
+        cursor.close();
+        db.close();
+
+        return bnID;
     }
 }

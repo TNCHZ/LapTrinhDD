@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 
 import androidx.activity.EdgeToEdge;
@@ -19,7 +18,6 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.jpyou.MyDatabaseHelper;
 import com.example.jpyou.R;
-import com.example.jpyou.User.userinform;
 
 import java.util.List;
 
@@ -105,6 +103,7 @@ public class AdminListUser extends AppCompatActivity {
         }
 
     }
+
     private void refreshUserList() {
         switch (vaitro) {
             case "Bệnh nhân":

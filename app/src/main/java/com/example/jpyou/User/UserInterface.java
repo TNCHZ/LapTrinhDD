@@ -1,7 +1,11 @@
 package com.example.jpyou.User;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -20,6 +24,7 @@ public class UserInterface extends AppCompatActivity {
     private ViewPager2 viewPager;
     private BottomNavigationView bottomNavigationView;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +38,7 @@ public class UserInterface extends AppCompatActivity {
 
         viewPager = findViewById(R.id.viewPagerUser);
         bottomNavigationView = findViewById(R.id.bottomNavigationUser);
-        ViewPagerAdapterUser adapter = new ViewPagerAdapterUser(this);
+        ViewPagerAdapterUser adapter = new ViewPagerAdapterUser(this, getIntent().getStringExtra("TaiKhoanID"));
         //this --extend--> AppCompatActivity --extend--> FragmentActivity
         viewPager.setAdapter(adapter);
 

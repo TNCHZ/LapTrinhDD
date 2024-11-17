@@ -2,11 +2,11 @@ package com.example.jpyou.User;
 
 import androidx.annotation.NonNull;
 
-public class userinform {
+public class user {
     private String taiKhoanID, hoVaTen, gioiTinh, namSinh, diaChi, CCCD, soDT, Email, chuyenKhoa, chucVu;
 
 
-    public userinform(String taiKhoanID, String hoVaTen, String gioiTinh, String namSinh, String diaChi, String CCCD, String soDT, String email, String chuyenKhoa, String chucVu) {
+    public user(String taiKhoanID, String hoVaTen, String gioiTinh, String namSinh, String diaChi, String CCCD, String soDT, String email, String chuyenKhoa, String chucVu) {
         this.taiKhoanID = taiKhoanID;
         this.hoVaTen = hoVaTen;
         this.gioiTinh = gioiTinh;
@@ -19,10 +19,9 @@ public class userinform {
         this.chucVu = chucVu;
     }
 
-    public userinform(String taiKhoanID, String hoVaTen, String soDT) {
+    public user(String taiKhoanID) {
         this.taiKhoanID = taiKhoanID;
-        this.hoVaTen = hoVaTen;
-        this.soDT = soDT;
+
     }
 
     public String getTaiKhoanID() {

@@ -46,6 +46,9 @@
             android:name=".Admin.AdminMenu"
             android:parentActivityName=".Admin.AdminLogin" />
         <activity
+            android:name=".User.user_schedule_appointment"
+            android:parentActivityName=".User.UserInterface"/>
+        <activity
             android:name=".ChooseRoles"
             android:exported="true">
             <intent-filter>

@@ -1,5 +1,7 @@
 package com.example.jpyou;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
@@ -10,6 +12,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -21,6 +24,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.jpyou.Admin.AdminLogin;
 import com.example.jpyou.Doctor.DoctorInterface;
+import com.example.jpyou.Nurse.NurseInterface;
 import com.example.jpyou.User.UserInterface;
 
 public class Login extends AppCompatActivity {
@@ -28,30 +32,14 @@ public class Login extends AppCompatActivity {
     private EditText txtPass;
     private CheckBox checkShowPassword;
     private Button btnRole;
+    private MyDatabaseHelper db;
+    private TextView username, password;
+    private int taiKhoanID;
 
-    //tạo và lấy menu
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         getMenuInflater().inflate(R.menu.context_menu_role, menu);
-    }
-
-    @Override
-    public boolean onContextItemSelected(@NonNull MenuItem item) {
-        btnRole = findViewById(R.id.btnRole);
-        if (item.getItemId() == R.id.btnRole_Staff) {
-            btnRole.setText("Nhân viên");
-            Toast.makeText(this, "Nhân viên", Toast.LENGTH_SHORT).show();
-        } else if (item.getItemId() == R.id.btnRole_Patient) {
-            btnRole.setText("Bệnh nhân");
-            Toast.makeText(this, "Bệnh nhân", Toast.LENGTH_SHORT).show();
-        } else if (item.getItemId() == R.id.role_admin) {
-            btnRole.setText("Admin");
-            Toast.makeText(this, "Admin", Toast.LENGTH_SHORT).show();
-            Intent intent_AdminLogin = new Intent(Login.this, AdminLogin.class);
-            startActivity(intent_AdminLogin);
-        }
-        return super.onContextItemSelected(item);
     }
 
     @Override
@@ -65,20 +53,22 @@ public class Login extends AppCompatActivity {
             return insets;
         });
 
+        // Initialize MyDatabaseHelper
+        db = new MyDatabaseHelper(this);
 
-        //thiết lập button lấy menu
+        // Button for Role selection
         btnRole = findViewById(R.id.btnRole);
         registerForContextMenu(btnRole);
 
-        //thiết lập role
+        // Set role logic
         role();
 
-        //Ẩn/Hiện Password
-        txtPass = findViewById(R.id.txtMatKhau_User);//lấy id EditText Password
-        checkShowPassword = findViewById(R.id.checkPassword_User);//lấy id CheckBox Show
+        // Password visibility toggle
+        txtPass = findViewById(R.id.txtMatKhau_User);
+        checkShowPassword = findViewById(R.id.checkPassword_User);
         showHintPassword();
 
-        //Chuyển layout
+        // Button actions for registration and login
         btnDangKy = findViewById(R.id.btnDangKy_User);
         btnDangNhap = findViewById(R.id.btnLogin_User);
         convert();
@@ -91,9 +81,7 @@ public class Login extends AppCompatActivity {
         int roleStaff = R.id.btnRole_Staff;
         int rolePatient = R.id.btnRole_Patient;
         if (buttonID_role_User == roleStaff) {
-            btnRole.setText("Nhân viên");
-            btnDangKy = findViewById(R.id.btnDangKy_User);
-            btnDangKy.setVisibility(View.GONE);
+            showOptionsDialog();
         }
         if (buttonID_role_User == rolePatient) {
             btnRole.setText("Bệnh nhân");
@@ -101,43 +89,75 @@ public class Login extends AppCompatActivity {
     }
 
     private void showHintPassword() {
-        //Hàm Show/Hint Password
-        checkShowPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if (isChecked) {
-                    txtPass.setTransformationMethod(null);
-                } else {
-                    txtPass.setTransformationMethod(new PasswordTransformationMethod());
-                    txtPass.setSelection(txtPass.getText().length());
-                }
+        // Toggle show/hide password
+        checkShowPassword.setOnCheckedChangeListener((compoundButton, isChecked) -> {
+            if (isChecked) {
+                txtPass.setTransformationMethod(null);
+            } else {
+                txtPass.setTransformationMethod(new PasswordTransformationMethod());
+                txtPass.setSelection(txtPass.getText().length());
             }
         });
     }
 
     private void convert() {
-        //Chuyển  layout from_dang_ky
-        btnDangKy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent_dki = new Intent(Login.this, form_dang_ky.class);
-                startActivity(intent_dki);
-            }
+        username = findViewById(R.id.txtTaiKhoan_User);
+        password = findViewById(R.id.txtMatKhau_User);
+
+
+        // Registration button click listener
+        btnDangKy.setOnClickListener(view -> {
+            Intent intent_dki = new Intent(Login.this, form_dang_ky.class);
+            startActivity(intent_dki);
         });
 
-
-        btnDangNhap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                btnRole = findViewById(R.id.btnRole);
-                if (btnRole.getText().toString() == "Bệnh nhân") {
+        // Login button click listener
+        btnDangNhap.setOnClickListener(view -> {
+            taiKhoanID = Integer.parseInt(db.verifyPassword(username.getText().toString(),
+                    password.getText().toString(), btnRole.getText().toString()));
+            if (taiKhoanID != -1) {
+                if ("Bệnh nhân".equals(btnRole.getText().toString())) {
                     Intent intent_user = new Intent(Login.this, UserInterface.class);
+                    intent_user.putExtra("TaiKhoanID", String.valueOf(taiKhoanID));
                     startActivity(intent_user);
-                } else if (btnRole.getText().toString() == "Nhân viên") {
+                } else if ("Bác sĩ".equals(btnRole.getText().toString())) {
                     Intent intent_doctor = new Intent(Login.this, DoctorInterface.class);
                     startActivity(intent_doctor);
+                } else
+                {
+                    Intent intent_doctor = new Intent(Login.this, NurseInterface.class);
+                    startActivity(intent_doctor);
                 }
+            } else {
+                Toast.makeText(Login.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
+    private void showOptionsDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Bạn là:");
+        builder.setItems(new CharSequence[]{"Bác sĩ", "Y tá", "Admin"}, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which)
+                {
+                    case 0:
+                        btnRole.setText("Bác sĩ");
+                        break;
+                    case 1:
+                        btnRole.setText("Y tá");
+                        break;
+                    case 2:
+                    {
+                        Intent intent = new Intent(Login.this, AdminLogin.class);
+                        startActivity(intent);
+                    }
+                }
+            }
+        });
+        builder.show();
+    }
+
 }
+
