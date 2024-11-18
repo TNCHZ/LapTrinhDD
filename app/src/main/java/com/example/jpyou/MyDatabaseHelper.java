@@ -83,7 +83,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 "ngayKham TEXT NOT NULL, " +
                 "gioKham TEXT NOT NULL," +
                 "soThuTuKham INTEGER, " +
-                "tinhTrangHen INTERGER, " +
+                "tinhTrangHen INTEGER," +
+                "khoaChon TEXT NOT NULL," +
                 "FOREIGN KEY(bacsiID) REFERENCES BacSi(BacSiID), " +
                 "FOREIGN KEY(benhnhanID) REFERENCES BenhNhan(BenhNhanID), " +
                 "FOREIGN KEY(YtaID) REFERENCES Yta(YtaID));";
@@ -133,23 +134,23 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(createToaThuocTable);
         db.execSQL(createToaThuocThuocTable);
 
-//        String insertTaiKhoan1 = "INSERT INTO TaiKhoan (TaiKhoan, MatKhau, NgayThamGia, HoatDong) VALUES ('admin_user', 'user123', '2024-11-14', 1);";
-//        String insertTaiKhoan2 = "INSERT INTO TaiKhoan (TaiKhoan, MatKhau, NgayThamGia, HoatDong) VALUES ('admin_report', 'report123', '2024-11-14', 1);";
-//
-//        db.execSQL(insertTaiKhoan1);
-//        db.execSQL(insertTaiKhoan2);
-//
-//        String insertNguoiDung1 = "INSERT INTO NguoiDung (TaiKhoanID, HoTen, VaiTro) VALUES ((SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = 'admin_user'), 'Admin User', 'Admin');";
-//        String insertNguoiDung2 = "INSERT INTO NguoiDung (TaiKhoanID, HoTen, VaiTro) VALUES ((SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = 'admin_report'), 'Admin Report', 'Admin');";
-//
-//        db.execSQL(insertNguoiDung1);
-//        db.execSQL(insertNguoiDung2);
-//
-//        String insertAdmin1 = "INSERT INTO Admin (ChucNang, TaiKhoanID) VALUES ('Quản lý đăng nhập', (SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = 'admin_user'));";
-//        String insertAdmin2 = "INSERT INTO Admin (ChucNang, TaiKhoanID) VALUES ('Xem thống kê', (SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = 'admin_report'));";
-//
-//        db.execSQL(insertAdmin1);
-//        db.execSQL(insertAdmin2);
+        String insertTaiKhoan1 = "INSERT INTO TaiKhoan (TaiKhoan, MatKhau, NgayThamGia, HoatDong) VALUES ('admin_user', 'user123', '14/11/2024', 1);";
+        String insertTaiKhoan2 = "INSERT INTO TaiKhoan (TaiKhoan, MatKhau, NgayThamGia, HoatDong) VALUES ('admin_report', 'report123', '14/11/2024', 1);";
+
+        db.execSQL(insertTaiKhoan1);
+        db.execSQL(insertTaiKhoan2);
+
+        String insertNguoiDung1 = "INSERT INTO NguoiDung (TaiKhoanID, HoTen, VaiTro) VALUES ((SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = 'admin_user'), 'Admin User', 'Admin');";
+        String insertNguoiDung2 = "INSERT INTO NguoiDung (TaiKhoanID, HoTen, VaiTro) VALUES ((SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = 'admin_report'), 'Admin Report', 'Admin');";
+
+        db.execSQL(insertNguoiDung1);
+        db.execSQL(insertNguoiDung2);
+
+        String insertAdmin1 = "INSERT INTO Admin (ChucNang, TaiKhoanID) VALUES ('Quản lý đăng nhập', (SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = 'admin_user'));";
+        String insertAdmin2 = "INSERT INTO Admin (ChucNang, TaiKhoanID) VALUES ('Xem thống kê', (SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = 'admin_report'));";
+
+        db.execSQL(insertAdmin1);
+        db.execSQL(insertAdmin2);
     }
 
 
@@ -394,36 +395,29 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return users;
     }
 
-    @SuppressLint("Range")
-    public String getTaiKhoanIDByPhoneNumber(int phoneNumber) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        // Truy vấn lấy TaiKhoanID dựa trên số điện thoại
-        String query = "SELECT TaiKhoan.TaiKhoanID " +
-                "FROM TaiKhoan " +
-                "INNER JOIN NguoiDung ON TaiKhoan.TaiKhoanID = NguoiDung.TaiKhoanID " +
-                "WHERE NguoiDung.SoDT = ?";
-
-        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(phoneNumber)});
-
-        String taiKhoanID = "-1";  // Mặc định trả về -1 nếu không tìm thấy
-        if (cursor.moveToFirst()) {
-            taiKhoanID = cursor.getString(cursor.getColumnIndex("TaiKhoanID"));
-        }
-
-        cursor.close();
-        db.close();
-
-        return taiKhoanID;
-    }
-
-    public void taoLichHen(int id, String ngayKham, String gioKham)
+    public void taoLichHen(String id, String ngayKham, String gioKham, String khoaChon)
     {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String query = "INSERT INTO LichHen (benhnhanID, ngayKham, gioKham, tinhTrangHen) VALUES (?, ?, ?)";
+        String query = "INSERT INTO LichHen (benhnhanID, ngayKham, gioKham, tinhTrangHen, khoaChon) VALUES (?, ?, ?, ?, ?)";
 
-        db.execSQL(query, new Object[]{String.valueOf(id), ngayKham, gioKham, "0"});
+        db.execSQL(query, new Object[]{id, ngayKham, gioKham, "0", khoaChon});
+
+        // Đóng cơ sở dữ liệu sau khi thực hiện thao tác
+        db.close();
+    }
+
+    public void taoLichHenBS(String BacSiID, String YTaID, String stt, String BenhNhanID)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "INSERT INTO LichHen (bacsiID, YtaID, soThuTuKham) VALUES (?, ?, ?)";
+
+        db.execSQL(query, new Object[]{BacSiID, YTaID, stt });
+
+        String queryud = "UPDATE LichHen SET tinhTrangHen = 1 WHERE benhnhanID = ?";
+
+        db.execSQL(queryud, new Object[]{BenhNhanID});
 
         // Đóng cơ sở dữ liệu sau khi thực hiện thao tác
         db.close();
@@ -434,9 +428,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         // Truy vấn lấy TaiKhoanID dựa trên số điện thoại
-        String query = "SELECT BenhNhan.BenhNhanID " +
+        String query = "SELECT BenhNhanID " +
                 "FROM BenhNhan " +
-                "INNER JOIN TaiKhoan ON TaiKhoan.TaiKhoanID = BenhNhan.TaiKhoanID " +
                 "WHERE TaiKhoanID = ?";
 
         Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(tkID)});
@@ -450,5 +443,65 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.close();
 
         return bnID;
+    }
+
+    @SuppressLint("Range")
+    public List<String> dsDangKiKham() {
+        List<String> users = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT LichHen.lichhenID, NguoiDung.HoTen, LichHen.ngayKham, LichHen.gioKham, LichHen.khoaChon " +
+                "FROM LichHen " +
+                "JOIN BenhNhan ON LichHen.benhnhanID = BenhNhan.BenhNhanID " +
+                "JOIN NguoiDung ON BenhNhan.TaiKhoanID = NguoiDung.TaiKhoanID " +
+                "WHERE LichHen.tinhTrangHen = 0";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                String lichHenID = cursor.getString(cursor.getColumnIndex("lichhenID"));
+                String tenNguoiDung = cursor.getString(cursor.getColumnIndex("HoTen")); // Đổi thành "HoTen"
+                String ngayKham = cursor.getString(cursor.getColumnIndex("ngayKham")); // Đổi thành "ngayKham"
+                String gioKham = cursor.getString(cursor.getColumnIndex("gioKham")); // Đổi thành "gioKham"
+                String khoaChon = cursor.getString(cursor.getColumnIndex("khoaChon")); // Đúng tên cột
+
+                // Thêm dữ liệu vào danh sách
+                users.add("ID: " + lichHenID + ", Tên: " + tenNguoiDung + ", Ngày: " + ngayKham + ", Giờ: " + gioKham + ", Khoa: " + khoaChon);
+            } while (cursor.moveToNext());
+        }
+
+        // Đóng cursor và database
+        cursor.close();
+        db.close();
+
+        return users;
+    }
+
+    @SuppressLint("Range")
+    public List<String> dsBacSiTheoKhoa(String Khoa) {
+        List<String> users = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT BacSi.BacSiID, NguoiDung.HoTen " +
+                "FROM BacSi " +
+                "JOIN NguoiDung ON BacSi.TaiKhoanID = NguoiDung.TaiKhoanID " +
+                "WHERE BacSi.ChuyenKhoa = ?";
+
+        Cursor cursor = db.rawQuery(query, new String[]{Khoa});
+
+        if (cursor.moveToFirst()) {
+            do {
+                String id = cursor.getString(cursor.getColumnIndex("BacSiID"));
+                String tenNguoiDung = cursor.getString(cursor.getColumnIndex("HoTen")); // Đổi thành "HoTen"
+                users.add("ID: " + id + ", Tên: " + tenNguoiDung);
+            } while (cursor.moveToNext());
+        }
+
+        // Đóng cursor và database
+        cursor.close();
+        db.close();
+
+        return users;
     }
 }

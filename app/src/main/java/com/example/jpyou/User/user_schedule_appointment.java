@@ -28,7 +28,8 @@ public class user_schedule_appointment extends AppCompatActivity {
     private static final String TAG = "UserScheduleAppointment";  // Log tag for better identification
     private String[] khoa = {"Tai, Mũi, Họng", "Mắt", "Răng hàm mặt", "Phụ Sản", "Cơ, Xương, Khớp"};
     private Spinner sp_role;
-    private String khoaChon, ngayChon;
+    private String khoaChon;
+    private String ngayChon;
     private Button bt;
     private CalendarView clv;
     private TextView txtTime;
@@ -55,6 +56,9 @@ public class user_schedule_appointment extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         long today = calendar.getTimeInMillis();
         clv.setMinDate(today);
+
+        ngayChon = calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH) + 1) + "/" + calendar.get(Calendar.YEAR);
+
 
         // Set listener for date selection
         clv.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
@@ -121,7 +125,7 @@ public class user_schedule_appointment extends AppCompatActivity {
                 }
 
                 // Call database method to save appointment
-                db.taoLichHen(userId, ngayChon, time);
+                db.taoLichHen(db.getBenhNhanID(userId), ngayChon, time, khoaChon);
 
                 // Log success message
                 Log.d(TAG, "Appointment scheduled successfully. User ID: " + userId + ", Date: " + ngayChon + ", Time: " + time + ", Department: " + khoaChon);

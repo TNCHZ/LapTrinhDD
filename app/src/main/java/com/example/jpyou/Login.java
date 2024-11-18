@@ -82,10 +82,10 @@ public class Login extends AppCompatActivity {
         int rolePatient = R.id.btnRole_Patient;
         if (buttonID_role_User == roleStaff) {
             showOptionsDialog();
-        }
-        if (buttonID_role_User == rolePatient) {
+        } else if (buttonID_role_User == rolePatient) {
             btnRole.setText("Bệnh nhân");
-        }
+        } else
+            btnRole.setText("Bệnh nhân");
     }
 
     private void showHintPassword() {
@@ -122,9 +122,9 @@ public class Login extends AppCompatActivity {
                     startActivity(intent_user);
                 } else if ("Bác sĩ".equals(btnRole.getText().toString())) {
                     Intent intent_doctor = new Intent(Login.this, DoctorInterface.class);
+                    intent_doctor.putExtra("TaiKhoanID", String.valueOf(taiKhoanID));
                     startActivity(intent_doctor);
-                } else
-                {
+                } else {
                     Intent intent_doctor = new Intent(Login.this, NurseInterface.class);
                     startActivity(intent_doctor);
                 }
@@ -140,16 +140,14 @@ public class Login extends AppCompatActivity {
         builder.setItems(new CharSequence[]{"Bác sĩ", "Y tá", "Admin"}, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                switch (which)
-                {
+                switch (which) {
                     case 0:
                         btnRole.setText("Bác sĩ");
                         break;
                     case 1:
                         btnRole.setText("Y tá");
                         break;
-                    case 2:
-                    {
+                    case 2: {
                         Intent intent = new Intent(Login.this, AdminLogin.class);
                         startActivity(intent);
                     }

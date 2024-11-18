@@ -3,6 +3,7 @@ package com.example.jpyou;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -75,8 +76,7 @@ public class form_dang_ky extends AppCompatActivity {
                         "Bệnh nhân"
                 );
 
-                Intent intent_user = new Intent(form_dang_ky.this, UserInterface.class);
-                intent_user.putExtra("TaiKhoanID", db.getTaiKhoanIDByPhoneNumber(Integer.parseInt(soDT.getText().toString())));
+                Intent intent_user = new Intent(form_dang_ky.this, Login.class);
                 startActivity(intent_user);
             }
         });

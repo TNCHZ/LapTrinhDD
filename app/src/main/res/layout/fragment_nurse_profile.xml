@@ -5,10 +5,16 @@
     android:layout_height="match_parent"
     tools:context=".NurseFragments.ProfileNurseFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical">
 
+        <Button
+            android:id="@+id/btn_dsYTa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Danh sách đăng kí khám bệnh" />
+    </LinearLayout>
 </FrameLayout>

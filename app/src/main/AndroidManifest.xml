@@ -46,8 +46,14 @@
             android:name=".Admin.AdminMenu"
             android:parentActivityName=".Admin.AdminLogin" />
         <activity
+            android:name=".Nurse.nurse_listSignin"
+            android:parentActivityName=".Nurse.NurseInterface" />
+        <activity
+            android:name=".Nurse.nurse_listbacsi"
+            android:parentActivityName=".Nurse.nurse_listSignin" />
+        <activity
             android:name=".User.user_schedule_appointment"
-            android:parentActivityName=".User.UserInterface"/>
+            android:parentActivityName=".User.UserInterface" />
         <activity
             android:name=".ChooseRoles"
             android:exported="true">

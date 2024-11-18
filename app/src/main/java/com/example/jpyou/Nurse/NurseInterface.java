@@ -32,7 +32,7 @@ public class NurseInterface extends AppCompatActivity {
 
         viewPager = findViewById(R.id.viewPagerNurse);
         bottomNavigationView = findViewById(R.id.bottomNavigationNurse);
-        ViewPagerAdapterNurse adapter = new ViewPagerAdapterNurse(this);
+        ViewPagerAdapterNurse adapter = new ViewPagerAdapterNurse(this, getIntent().getStringExtra("TaiKhoanID"));
         viewPager.setAdapter(adapter);
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
